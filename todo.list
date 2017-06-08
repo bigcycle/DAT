@@ -1,0 +1,6 @@
+[done]1. add module to modify the source file to adapt the DAT tool.
+[done]2. add templates for other cases
+3. add report template
+4. add function 'createNormalHourTable' to record the Normal Hours for each months.
+5. add option '-I' of DAT to initial the tool.
+[done] 6. add option '-o -r ALL' to generate report for all cases.

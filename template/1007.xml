@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<DATconfig>
+    <ID>1000</ID>
+    <name>Data Analysis Tool</name>
+	<data>   
+        <sql>
+            create temporary table region_tt select Region, SUM(Hours) AS Region_Hours from CDT GROUP BY Region;
+        </sql> 
+        <sql>
+            create temporary table region_hc select Region, SUM(Hours) AS Region_HC_Hours from CDT where Type='HC' GROUP BY Region;
+        </sql>
+        <sql>
+            select 
+            r1.Region,
+            r2.Region_HC_Hours,
+            r1.Region_Hours,
+            (r2.Region_HC_Hours / r1.Region_Hours) AS Region_Remote_Percentage
+            from
+            region_tt r1
+            inner join
+            region_hc r2 on r1.Region=r2.Region
+            order by Region_Remote_Percentage DESC;
+        </sql>
+		<rowFormat>s|d|d|d</rowFormat>
+		<sheetName>Remote percentage to per region</sheetName>
+		<colCount>4</colCount>
+    </data>
+	<template>302_Excel_Tool.xls</template>
+    <output>302_Excel_Tool_${endTime:yyMMdd}.xls</output>
+</DATconfig>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<DATconfig>
+    <ID>1000</ID>
+    <name>Data Analysis Tool</name>
+	<data>   
+        <sql>
+            select (select SUM(Hours) from CDT where Type='HC') AS Total_HC_Hours, (select SUM(Hours) from CDT) AS Total_Hours, ((select SUM(Hours) from CDT where Type='HC') / (select SUM(Hours) from CDT)) AS Remote_Percentage; 
+        </sql> 
+		<rowFormat>s|d|d|d</rowFormat>
+		<sheetName>Remote percentage to per region</sheetName>
+		<colCount>4</colCount>
+    </data>
+	<template>302_Excel_Tool.xls</template>
+    <output>302_Excel_Tool_${endTime:yyMMdd}.xls</output>
+</DATconfig>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<DATconfig>
+    <ID>1000</ID>
+    <name>Data Analysis Tool</name>
+	<data>   
+        <sql>
+            create temporary table cc_t select CostCenter from CDT GROUP BY CostCenter;
+        </sql>
+        <sql>
+            create temporary table temp select SUM(Hours) AS Individual_Total_Hours, PersonnelNo, Name, CostCenter from CDT GROUP BY PersonnelNo, Name, CostCenter;
+        </sql>
+        <sql>select count(CostCenter) from cc_t</sql>
+        <sql>select *, (Individual_Total_Hours / 144) AS UR from temp  where CostCenter = (select CostCenter from cc_t limit %s,1) order by UR DESC limit 5;</sql> 
+		<rowFormat>s|d|d|d</rowFormat>
+		<sheetName>Remote percentage to per region</sheetName>
+		<colCount>4</colCount>
+    </data>
+	<template>302_Excel_Tool.xls</template>
+    <output>302_Excel_Tool_${endTime:yyMMdd}.xls</output>
+</DATconfig>
