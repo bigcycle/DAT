@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<DATconfig>
+    <ID>1000</ID>
+    <name>Data Analysis Tool</name>
+	<data>   
+		<sql> 
+            select
+            f1.CostCenter AS Cost_Center,
+            f1.Hours AS Total_Chargable_Hours,
+            f2.Hours AS Headcount,
+            (f2.Hours * 168) AS Target_Hours,
+            (f1.Hours / (f2.Hours * 168)) AS UR
+            from
+            (select * from Finance where CostCenter in (select CostCenter from Finance GROUP BY CostCenter) AND Item="Total Chargeable hours (All resources)" AND EmployeeGroup='1') f1
+            inner join
+            (select * from Finance where CostCenter in (select CostCenter from Finance GROUP BY CostCenter) AND Item="Average Headcount" AND EmployeeGroup='1') f2 on f2.CostCenter = f1.CostCenter
+            where f2.Hours > 0
+            order by UR DESC limit 10;		  
+		</sql>
+        <sheetName>CC UR Top 10</sheetName>
+	</data>
+		<rowFormat>s|d|d|d|d</rowFormat>
+		<sheetName>CC UR Top 10</sheetName>
+		<colCount>5</colCount>
+	<template>302_Excel_Tool.xls</template>
+    <output>302_Excel_Tool_${endTime:yyMMdd}.xls</output>
+</DATconfig>

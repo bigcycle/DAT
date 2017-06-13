@@ -4,13 +4,8 @@
     <name>Data Analysis Tool</name>
 	<data>   
         <sql>
-            create temporary table cc_t select CostCenter from CDT GROUP BY CostCenter;
-        </sql>
-        <sql>
-            create temporary table temp select SUM(Hours) AS Individual_Total_Hours, PersonnelNo, Name, CostCenter from CDT GROUP BY PersonnelNo, Name, CostCenter;
-        </sql>
-        <sql>select count(CostCenter) from cc_t</sql>
-        <sql>select *, (Individual_Total_Hours / 144) AS UR from temp  where CostCenter = (select CostCenter from cc_t limit %s,1) order by UR DESC limit 5;</sql> 
+            select Region, SUM(Hours) AS Region_Hours, (SUM(Hours) / (select SUM(Hours) from CDT)) AS Percentage from CDT GROUP BY Region order by Percentage DESC;
+        </sql> 
 		<rowFormat>s|d|d|d</rowFormat>
 		<sheetName>Remote percentage to per region</sheetName>
 		<colCount>4</colCount>

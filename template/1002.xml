@@ -4,7 +4,7 @@
     <name>Data Analysis Tool</name>
 	<data>   
         <sql>
-            select SUM(Hours) AS Individual_Total_Hours, PersonnelNo, Name, CostCenter, (SUM(Hours) / 144) AS UR from CDT GROUP BY PersonnelNo, Name, CostCenter order by UR DESC limit 50;
+            select (select SUM(Hours) from CDT where Type='HC') AS Total_HC_Hours, (select SUM(Hours) from CDT) AS Total_Hours, ((select SUM(Hours) from CDT where Type='HC') / (select SUM(Hours) from CDT)) AS Remote_Percentage; 
         </sql> 
 		<rowFormat>s|d|d|d</rowFormat>
 		<sheetName>Remote percentage to per region</sheetName>

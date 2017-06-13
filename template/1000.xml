@@ -3,25 +3,29 @@
     <ID>1000</ID>
     <name>Data Analysis Tool</name>
 	<data>   
-		<sql> 
-            select
-            f1.CostCenter AS Cost_Center,
-            f1.Jan AS Total_Chargable_Hours,
-            f2.Jan AS Headcount,
-            (f2.Jan * 144) AS Target_Hours,
-            (f1.Jan / (f2.Jan * 144)) AS UR
+        <sql>
+            create temporary table region_tt select Region, SUM(Hours) AS Region_Hours from CDT GROUP BY Region;
+        </sql> 
+        <sql>
+            create temporary table region_hc select Region, SUM(Hours) AS Region_HC_Hours from CDT where Type='HC' GROUP BY Region;
+        </sql>
+        <sql>
+            select 
+            r1.Region,
+            r2.Region_HC_Hours,
+            r1.Region_Hours,
+            (r2.Region_HC_Hours / r1.Region_Hours) AS Region_Remote_Percentage
             from
-            (select * from Finance where CostCenter in (select CostCenter from Finance GROUP BY CostCenter) AND Item="Total Chargeable hours (All resources)" AND EmployeeGroup='1') f1
+            region_tt r1
             inner join
-            (select * from Finance where CostCenter in (select CostCenter from Finance GROUP BY CostCenter) AND Item="Average Headcount" AND EmployeeGroup='1') f2 on f2.CostCenter = f1.CostCenter
-            where f2.Jan > 0
-            order by UR DESC limit 10;		  
-		</sql>
-        <sheetName>CC UR Top 10</sheetName>
-	</data>
-		<rowFormat>s|d|d|d|d</rowFormat>
-		<sheetName>CC UR Top 10</sheetName>
-		<colCount>5</colCount>
+            region_hc r2 on r1.Region=r2.Region
+            where r1.Region_Hours > 0
+            order by Region_Remote_Percentage DESC;
+        </sql>
+		<rowFormat>s|d|d|d</rowFormat>
+		<sheetName>Remote percentage to per region</sheetName>
+		<colCount>4</colCount>
+    </data>
 	<template>302_Excel_Tool.xls</template>
     <output>302_Excel_Tool_${endTime:yyMMdd}.xls</output>
 </DATconfig>

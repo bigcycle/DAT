@@ -14,10 +14,7 @@ help += '''Operation Mode options:
 \n'''
 help += '''Import options: (with '-i' option)
 -f | --file                     File to be imported
--k | --keywords                 Keywords, the name of the column which record the hours, will be define as INT
 -t | --table                    Table to be imported to
--s | --sheet                    Sheet Number, specify which sheet to be imported
-                                e.g: '-s 0' or '-s 1'
 -a | --init                     Whether create table, only used when the first time of import operation for each table
 \n'''
 help += '''Output options: (with '-o' option)
@@ -28,8 +25,6 @@ help += '''Output options: (with '-o' option)
 
 def get_para(argv):
     para = {'__table__': '',
-            '__hours__': '',
-            '__sheet__': 0,
             '__file__': '',
             '__init__': 0,
             '__mode__': 0,
@@ -37,13 +32,13 @@ def get_para(argv):
     try:
         opts, args = getopt.getopt(
             argv, "hioaf:t:k:s:r:",
-            ['help', 'file', 'table', 'keywords', 'sheet', 'report', 'init'])
+            ['help', 'file', 'table', 'report', 'init'])
     except getopt.GetoptError:
         print "try 'DAT.py --help' or 'DAT.py -h' for more options"
         sys.exit(2)
     for opt, arg in opts:
         if opt in ("-h", "--help"):
-            print 'python DAT.py -i -f <file> -t <table> -k <keywords> -s <sheet> [-a]'
+            print 'python DAT.py -i -f <file> -t <table> [-a]'
             print 'python DAT.py -o -r <report>'
             print help
             sys.exit()
@@ -59,12 +54,6 @@ def get_para(argv):
             para['__file__'] = arg
         elif opt in ("-t", "--table"):
             para['__table__'] = arg
-        elif opt in ("-k", "--keywords"):
-            para['__hours__'] = arg
-        elif opt in ("-s", "--sheet"):
-            para['__sheet__'] = int(arg)
-    if len(args) > 0:
-        para['__sheet2__'] = int(args[0])
     return para
 
 
@@ -73,7 +62,6 @@ def main(para):
         modify(para['__file__'])
         print "Start to import data to table %s ...\n" % para['__table__']
         insert(para['__file__'], para['__table__'],
-               para['__sheet__'], para['__hours__'],
                para['__init__'])
     elif para['__mode__'] == 2:
         write(output(para['__report__']))

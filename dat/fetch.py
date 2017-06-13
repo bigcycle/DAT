@@ -32,7 +32,7 @@ def fetch(sqls):
     return results
 
 
-def fetch_1001(sqls):
+def fetch2(sqls):
     db = MySQLdb.connect("localhost", "root", "root", "Data")
     cursor = db.cursor()
     results = []
@@ -59,6 +59,6 @@ def fetch_1001(sqls):
             print "SQL Error:", sqls[3] % str(i)
             raise e
         results += cursor.fetchall()
-        results += [()]
+        # results += [()]
     db.close()
     return results

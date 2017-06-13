@@ -3,10 +3,10 @@
 import MySQLdb
 
 
-def createtable(table, headers, keywords):
+def createtable(table, headers):
     sql = "create table %s ( `id` smallint not null auto_increment," % table
     for header in headers:
-        if header == keywords:
+        if header == "Hours":
             sql = sql + " `%s` int," % header
         else:
             sql = sql + " `%s` varchar(50)," % header

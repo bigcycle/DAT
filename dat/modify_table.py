@@ -2,12 +2,7 @@
 
 import xlrd
 import xlwt
-from config import column
-
-
-headers = {'FA': ['Item', 'CostCenter', 'EmployeeGroup', 'Jan'],
-           'CDT': ['Region', 'PersonnelNo', 'Name', 'Type', 'CostCenter', 'Hours'],
-           'MUS': ['Date', 'Hours', 'Type', 'PersonnelNo', 'Name', 'CostCenter']}
+from config import column, headers
 
 
 def modify(org_file):
