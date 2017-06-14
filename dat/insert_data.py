@@ -23,9 +23,11 @@ def insertdb(table, db, cursor, _headers, __table__):
                 else:
                     col = col + "%d, " % 0
             else:
+                if isinstance(row_datas[_headers.index(_header)], float):
+                    row_datas[_headers.index(_header)] = int(
+                        row_datas[_headers.index(_header)])
                 col = col + '"%s", ' % row_datas[_headers.index(_header)]
         # col = modify_data(col)
-        col = col.replace('.0', '')
         sql_insert = "insert into %s (%s) values (%s)" % (
             __table__, he, col[:-2])
         try:

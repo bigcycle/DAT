@@ -20,6 +20,7 @@ help += '''Import options: (with '-i' option)
 help += '''Output options: (with '-o' option)
 -r | --report                   Templates which will be included in the report, if more than one template,use ',' to seperate.
                                 e.g: '-r 1000,1001,1002'
+                                If all the templates need to be included use '-r ALL'
 \n'''
 
 

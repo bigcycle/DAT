@@ -76,7 +76,7 @@ def modifyMUS(org_file, sheet):
     while r < rown:
         c = 0
         row_datas = table.row_values(r)
-        row_datas[1] = row_datas[1].split(',')[0]
+        # row_datas[1] = row_datas[1].split(',')[0]
         for col in cols:
             sheet.write(r, c, row_datas[col])
             c += 1

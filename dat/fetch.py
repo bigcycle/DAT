@@ -2,6 +2,7 @@
 
 import xml.etree.ElementTree as ET
 import MySQLdb
+from config import hours
 
 
 def parse(file):
@@ -21,6 +22,7 @@ def fetch(sqls):
     db = MySQLdb.connect("localhost", "root", "root", "Data")
     cursor = db.cursor()
     for sql in sqls:
+        sql = sql.replace('target_hours', hours)
         try:
             cursor.execute(sql)
             # print "curret sql:", sql
@@ -36,6 +38,7 @@ def fetch2(sqls):
     db = MySQLdb.connect("localhost", "root", "root", "Data")
     cursor = db.cursor()
     results = []
+    sqls[3] = sqls[3].replace('target_hours', hours)
     try:
         row = cursor.execute(sqls[0])
     except Exception, e:

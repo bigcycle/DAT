@@ -1,9 +1,12 @@
 # -*- coding:utf-8 -*-
 
-# used in modify_table.py to define the columns to be fetched for each table=
+# used in fetch.py as target hours for each one in current month
+hours = '168'
+
+# used in modify_table.py to define the columns to be fetched for each table
 column = {'CDT1': [1, 4, 5, 16, 17, 29, 37],
           'CDT2': [1, 4, 5, 16, 17, 28, 36],
-          'MUS': [0, 1, 2, 5, 6, 20],
+          'MUS': [0, 1, 7, 11, 16],
           'FA': [0, 1, 3, 10]}
 
 # used in output.py to define the sheet name of each case
@@ -36,4 +39,4 @@ sheetHeader = {'1010': ['Cost_Center', 'Total_Chargable_Hours', 'Headcount', 'Ta
 
 headers = {'FA': ['Item', 'CostCenter', 'EmployeeGroup', 'Hours'],
            'CDT': ['Region', 'PersonnelNo', 'Name', 'Type', 'CostCenter', 'LM', 'Hours'],
-           'MUS': ['Date', 'Hours', 'Type', 'PersonnelNo', 'Name', 'CostCenter']}
+           'MUS': ['Name', 'Date', 'PersonnelNo', 'CostCenter', 'Hours']}

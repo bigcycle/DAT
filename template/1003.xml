@@ -4,7 +4,7 @@
     <name>Data Analysis Tool</name>
 	<data>   
         <sql>
-            select SUM(Hours) AS Total_NS_Hours, CostCenter from MUS where Type='1652' GROUP BY CostCenter order by Total_NS_Hours DESC;
+            select SUM(Hours) AS Total_NS_Hours, CostCenter from MUS GROUP BY CostCenter order by Total_NS_Hours DESC;
         </sql> 
 		<rowFormat>s|d|d|d</rowFormat>
 		<sheetName>Remote percentage to per region</sheetName>
