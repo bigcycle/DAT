@@ -6,7 +6,7 @@ import time
 from config import sheetHeader, sheetName
 
 
-def output(reports):
+def output(reports, target):
     results = {}
     if reports == "ALL":
         reports = "1000,1001,1002,1003,1004,1005,1006,1007,1008,1009,1010"
@@ -14,9 +14,9 @@ def output(reports):
     for template in templates:
         data = parse('template/%s.xml' % template)
         if template == '1007' or template == '1008':
-            results[template] = fetch2(data['sqls'])
+            results[template] = fetch2(data['sqls'], target)
         else:
-            results[template] = fetch(data['sqls'])
+            results[template] = fetch(data['sqls'], target)
     # for k, v in results.items():
     #     print k, v, '\n'
     return results

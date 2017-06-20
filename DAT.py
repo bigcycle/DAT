@@ -13,34 +13,32 @@ help += '''Operation Mode options:
 -h | --help                         Print help and exit.
 \n'''
 help += '''Import options: (with '-i' option)
--f | --file                     File to be imported
--t | --table                    Table to be imported to
 -a | --init                     Whether create table, only used when the first time of import operation for each table
 \n'''
 help += '''Output options: (with '-o' option)
 -r | --report                   Templates which will be included in the report, if more than one template,use ',' to seperate.
                                 e.g: '-r 1000,1001,1002'
                                 If all the templates need to be included use '-r ALL'
+-t | --target                   Target hours for current month.
 \n'''
 
 
 def get_para(argv):
-    para = {'__table__': '',
-            '__file__': '',
+    para = {'__target__': '',
             '__init__': 0,
             '__mode__': 0,
             '__report__': ''}
     try:
         opts, args = getopt.getopt(
-            argv, "hioaf:t:k:s:r:",
-            ['help', 'report', 'add'])
+            argv, "hioat:r:",
+            ['help', 'report', 'add', 'target'])
     except getopt.GetoptError:
         print "try 'DAT.py --help' or 'DAT.py -h' for more options"
         sys.exit(2)
     for opt, arg in opts:
         if opt in ("-h", "--help"):
             print 'python DAT.py -i <file> [-a]'
-            print 'python DAT.py -o -r <report>'
+            print 'python DAT.py -o -r <report> -t <target_hours>'
             print help
             sys.exit()
         elif opt in ("-i", ):
@@ -51,8 +49,8 @@ def get_para(argv):
             para['__init__'] = 1
         elif opt in ("-r", "--report"):
             para['__report__'] = arg
-        # elif opt in ("-f", "--file"):
-        #     para['__file__'] = arg
+        elif opt in ("-t", "--target"):
+            para['__target__'] = arg
     if len(args) > 0:
         para['__file__'] = args[0]
     return para
@@ -64,7 +62,7 @@ def main(para):
         print "Start to import data to table %s ...\n" % table
         insert(para['__file__'], table, para['__init__'])
     elif para['__mode__'] == 2:
-        write(output(para['__report__']))
+        write(output(para['__report__'], para['__target__']))
 
 
 if __name__ == '__main__':

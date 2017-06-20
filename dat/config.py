@@ -1,7 +1,13 @@
 # -*- coding:utf-8 -*-
 
 # used in fetch.py as target hours for each one in current month
-hours = '168'
+
+hours = {"Jan": 144,
+         "Feb": 152,
+         "Mar": 184,
+         "Apr": 144,
+         "May": 168,
+         "Jun": 176}
 
 # used in modify_table.py to define the columns to be fetched for each table
 column = {'CDT1': [1, 4, 5, 16, 17, 29],
