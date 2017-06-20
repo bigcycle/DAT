@@ -50,7 +50,7 @@ def insert(file, table, init):
     headers = []
     headers.extend(sheet_data.row_values(0))
     # headers = modify_header(_headers)
-    if init == 1:
+    if init == 0:
         print "Initialize the table for the first import...\n"
         createtable(table, headers)
     else:

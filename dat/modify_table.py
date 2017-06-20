@@ -13,19 +13,23 @@ def modify(org_file):
     for header in headers[opt[0]]:
         sheet.write(0, c, header)
         c += 1
-    if opt[0] == "FA":
-        modifyFA(org_file, sheet)
+    if opt[0] == "Finance":
+        modifyFinance(org_file, sheet, opt[1])
     elif opt[0] == "CDT":
-        modifyCDT(org_file, sheet)
+        modifyCDT(org_file, sheet, opt[1])
     elif opt[0] == "MUS":
         modifyMUS(org_file, sheet)
     file.save('source/' + org_file)
+    return opt[0]
 
 
-def modifyFA(org_file, sheet2):
+def modifyFinance(org_file, sheet, month):
     data = xlrd.open_workbook(org_file)
     table = data.sheets()[0]
-    cols = column['FA']
+    temp_row = map(lambda x: x.strip()[:3], table.row_values(31))
+    temp_col = temp_row.index(month)
+    cols = column['Finance']
+    cols.append(temp_col)
     i = 33
     r = 1
     rown = table.nrows
@@ -36,16 +40,19 @@ def modifyFA(org_file, sheet2):
             ("Total Chargeable hours (All resources)" in row_datas or
              "Average Headcount" in row_datas):
             for col in cols:
-                sheet2.write(r, c, row_datas[col])
+                sheet.write(r, c, row_datas[col])
                 c += 1
             r += 1
         i += 1
 
 
-def modifyCDT(org_file, sheet):
+def modifyCDT(org_file, sheet, month):
     data = xlrd.open_workbook(org_file)
     table = data.sheets()[1]
+    temp_row = table.row_values(0)
+    temp_col = temp_row.index(month)
     cols = column['CDT1']
+    cols.append(temp_col)
     r = 1
     rown = table.nrows
     while r < rown:
@@ -56,7 +63,10 @@ def modifyCDT(org_file, sheet):
             c += 1
         r += 1
     table2 = data.sheets()[2]
+    temp_row2 = table2.row_values(0)
+    temp_col2 = temp_row2.index(month)
     cols2 = column['CDT2']
+    cols2.append(temp_col2)
     rown2 = rown + table2.nrows - 1
     while r < rown2:
         c = 0
@@ -82,9 +92,8 @@ def modifyMUS(org_file, sheet):
             c += 1
         r += 1
 
-
 # def main():
-#     modify('FA_2017_Jan.xlsx')
+#     modify('Finance_2017_Jan.xlsx')
 #     modify('MUS_2017_Jan.xls')
 #     modify('CDT_2017_Jan.xls')
 

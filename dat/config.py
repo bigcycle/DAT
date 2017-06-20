@@ -4,10 +4,10 @@
 hours = '168'
 
 # used in modify_table.py to define the columns to be fetched for each table
-column = {'CDT1': [1, 4, 5, 16, 17, 29, 37],
-          'CDT2': [1, 4, 5, 16, 17, 28, 36],
+column = {'CDT1': [1, 4, 5, 16, 17, 29],
+          'CDT2': [1, 4, 5, 16, 17, 28],
           'MUS': [0, 1, 7, 11, 16],
-          'FA': [0, 1, 3, 10]}
+          'Finance': [0, 1, 3]}
 
 # used in output.py to define the sheet name of each case
 sheetName = {'1010': 'CC UR Top 10',
@@ -37,6 +37,6 @@ sheetHeader = {'1010': ['Cost_Center', 'Total_Chargable_Hours', 'Headcount', 'Ta
 
 # used in modify_table.py to define the Headers of each table
 
-headers = {'FA': ['Item', 'CostCenter', 'EmployeeGroup', 'Hours'],
+headers = {'Finance': ['Item', 'CostCenter', 'EmployeeGroup', 'Hours'],
            'CDT': ['Region', 'PersonnelNo', 'Name', 'Type', 'CostCenter', 'LM', 'Hours'],
            'MUS': ['Name', 'Date', 'PersonnelNo', 'CostCenter', 'Hours']}

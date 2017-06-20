@@ -33,13 +33,13 @@ def get_para(argv):
     try:
         opts, args = getopt.getopt(
             argv, "hioaf:t:k:s:r:",
-            ['help', 'file', 'table', 'report', 'init'])
+            ['help', 'report', 'add'])
     except getopt.GetoptError:
         print "try 'DAT.py --help' or 'DAT.py -h' for more options"
         sys.exit(2)
     for opt, arg in opts:
         if opt in ("-h", "--help"):
-            print 'python DAT.py -i -f <file> -t <table> [-a]'
+            print 'python DAT.py -i <file> [-a]'
             print 'python DAT.py -o -r <report>'
             print help
             sys.exit()
@@ -47,23 +47,22 @@ def get_para(argv):
             para['__mode__'] = 1
         elif opt in ("-o",):
             para['__mode__'] = 2
-        elif opt in ("-a", "--init"):
+        elif opt in ("-a", "--add"):
             para['__init__'] = 1
         elif opt in ("-r", "--report"):
             para['__report__'] = arg
-        elif opt in ("-f", "--file"):
-            para['__file__'] = arg
-        elif opt in ("-t", "--table"):
-            para['__table__'] = arg
+        # elif opt in ("-f", "--file"):
+        #     para['__file__'] = arg
+    if len(args) > 0:
+        para['__file__'] = args[0]
     return para
 
 
 def main(para):
     if para['__mode__'] == 1:
-        modify(para['__file__'])
-        print "Start to import data to table %s ...\n" % para['__table__']
-        insert(para['__file__'], para['__table__'],
-               para['__init__'])
+        table = modify(para['__file__'])
+        print "Start to import data to table %s ...\n" % table
+        insert(para['__file__'], table, para['__init__'])
     elif para['__mode__'] == 2:
         write(output(para['__report__']))
 
