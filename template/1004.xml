@@ -4,7 +4,7 @@
     <name>Data Analysis Tool</name>
 	<data>   
         <sql>
-            select SUM(Hours) AS Total_NS_Hours, PersonnelNo, Name, CostCenter from MUS GROUP BY PersonnelNo, Name, CostCenter order by Total_NS_Hours DESC;
+            select SUM(Hours) AS Total_NS_Hours, PersonnelNo, Name, CostCenter from MUS GROUP BY PersonnelNo, Name, CostCenter order by Total_NS_Hours DESC limit 50;
         </sql> 
 		<rowFormat>s|d|d|d</rowFormat>
 		<sheetName>Individual nightshift in ITC</sheetName>

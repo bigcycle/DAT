@@ -4,7 +4,7 @@
     <name>Data Analysis Tool</name>
 	<data>   
         <sql>
-            select SUM(Hours) AS Individual_Total_Hours, PersonnelNo, Name, CostCenter, LM, (SUM(Hours) / target_hours) AS UR from CDT GROUP BY PersonnelNo, Name, CostCenter , LM order by UR limit 100;
+            select SUM(Hours) AS Individual_Total_Hours, PersonnelNo, Name, CostCenter, LM, (SUM(Hours) / target_hours) AS UR from CDT where PersonnelNo != '#' GROUP BY PersonnelNo, Name, CostCenter , LM order by UR limit 200;
         </sql> 
 		<rowFormat>s|d|d|d</rowFormat>
 		<sheetName>Bottom 100 individual UR in ITC</sheetName>

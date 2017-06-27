@@ -13,7 +13,8 @@ hours = {"Jan": 144,
 column = {'CDT1': [1, 4, 5, 16, 17, 29],
           'CDT2': [1, 4, 5, 16, 17, 28],
           'MUS': [0, 1, 7, 11, 16],
-          'Finance': [0, 1, 3]}
+          'Finance': [0, 1, 3],
+          'CC': [1, 2, 3]}
 
 # used in output.py to define the sheet name of each case
 sheetName = {'1010': 'CC UR Top 10',
@@ -21,7 +22,7 @@ sheetName = {'1010': 'CC UR Top 10',
              '1008': 'Individual UR top 5 per CC',
              '1007': 'Individual UR Bottom 5 per CC',
              '1006': 'Top 50 individual UR in IT&C',
-             '1005': 'Bottom 100 individual UR in IT&C',
+             '1005': 'Bottom 50 individual UR in IT&C',
              '1003': 'Nightshift data per CC',
              '1004': 'Individual nightshift in IT&C',
              '1002': 'Remote percentage',
@@ -45,4 +46,5 @@ sheetHeader = {'1010': ['Cost_Center', 'Total_Chargable_Hours', 'Headcount', 'Ta
 
 headers = {'Finance': ['Item', 'CostCenter', 'EmployeeGroup', 'Hours'],
            'CDT': ['Region', 'PersonnelNo', 'Name', 'Type', 'CostCenter', 'LM', 'Hours'],
-           'MUS': ['Name', 'Date', 'PersonnelNo', 'CostCenter', 'Hours']}
+           'MUS': ['Name', 'Date', 'PersonnelNo', 'CostCenter', 'Hours'],
+           'CC': ['CostCenter', 'ManagerHC', 'Manager']}

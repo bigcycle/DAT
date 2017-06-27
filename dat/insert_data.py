@@ -16,7 +16,7 @@ def insertdb(table, db, cursor, _headers, __table__):
     while i < rows:
         row_datas = table.row_values(i)
         for _header in _headers:
-            if _header == "Hours":
+            if _header == "Hours" or _header == "ManagerHC":
                 if row_datas[_headers.index(_header)] != '':
                     col = col + \
                         "%d, " % int(row_datas[_headers.index(_header)])

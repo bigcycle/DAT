@@ -7,7 +7,7 @@
             create temporary table cc_t select CostCenter from CDT GROUP BY CostCenter;
         </sql>
         <sql>
-            create temporary table temp select SUM(Hours) AS Individual_Total_Hours, PersonnelNo, Name, CostCenter, LM from CDT GROUP BY PersonnelNo, Name, CostCenter, LM;
+            create temporary table temp select SUM(Hours) AS Individual_Total_Hours, PersonnelNo, Name, CostCenter, LM from CDT where PersonnelNo != '#' GROUP BY PersonnelNo, Name, CostCenter, LM;
         </sql>
         <sql>select count(CostCenter) from cc_t</sql>
         <sql>select *, (Individual_Total_Hours / target_hours) AS UR from temp  where CostCenter = (select CostCenter from cc_t limit %s,1) order by UR DESC limit 5;</sql> 

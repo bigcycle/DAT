@@ -7,15 +7,15 @@
             select
             f1.CostCenter AS Cost_Center,
             f1.Hours AS Total_Chargable_Hours,
-            f2.Hours AS Headcount,
-            (f2.Hours * target_hours) AS Target_Hours,
-            (f1.Hours / (f2.Hours * target_hours)) AS UR
+            (f2.Hours - CC.ManagerHC) AS Headcount,
+            ((f2.Hours - CC.ManagerHC) * target_hours) AS Target_Hours,
+            (f1.Hours / ((f2.Hours - CC.ManagerHC) * target_hours)) AS UR
             from
-            (select * from Finance where CostCenter in (select CostCenter from Finance GROUP BY CostCenter) AND Item="Total Chargeable hours (All resources)" AND EmployeeGroup='1') f1
+            (select * from Finance where CostCenter in (select CostCenter from CC) AND             Item="Total Chargeable hours (All resources)" AND EmployeeGroup='1') f1
             inner join
-            (select * from Finance where CostCenter in (select CostCenter from Finance GROUP BY CostCenter) AND Item="Average Headcount" AND EmployeeGroup='1') f2 on f2.CostCenter = f1.CostCenter
-            where f2.Hours > 0 and f2.CostCenter not like '100%'
-            order by UR DESC limit 10;		  
+            (select * from Finance where CostCenter in (select CostCenter from CC) AND             Item="Average Headcount" AND EmployeeGroup='1') f2 on f2.CostCenter =             f1.CostCenter
+            inner join CC on f1.CostCenter = CC.CostCenter
+            order by UR DESC limit 10; 
 		</sql>
         <sheetName>CC UR Top 10</sheetName>
 	</data>

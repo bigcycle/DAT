@@ -19,6 +19,8 @@ def modify(org_file):
         modifyCDT(org_file, sheet, opt[1])
     elif opt[0] == "MUS":
         modifyMUS(org_file, sheet)
+    elif opt[0] == "CC":
+        modifyCC(org_file, sheet)
     file.save('source/' + org_file)
     return opt[0]
 
@@ -93,6 +95,21 @@ def modifyMUS(org_file, sheet):
             c += 1
         r += 1
 
+
+def modifyCC(org_file, sheet):
+    data = xlrd.open_workbook(org_file)
+    table = data.sheets()[0]
+    cols = column['CC']
+    rown = table.nrows
+    i = 4
+    while i < rown:
+        c = 0
+        row_datas = table.row_values(i)
+        # row_datas[1] = row_datas[1].split(',')[0]
+        for col in cols:
+            sheet.write(i - 3, c, row_datas[col])
+            c += 1
+        i += 1
 # def main():
 #     modify('Finance_2017_Jan.xlsx')
 #     modify('MUS_2017_Jan.xls')
