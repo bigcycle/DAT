@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <DATconfig>
-    <ID>1000</ID>
+    <ID>1003</ID>
     <name>Data Analysis Tool</name>
 	<data>   
         <sql>
             select SUM(Hours) AS Total_NS_Hours, CostCenter from MUS GROUP BY CostCenter order by Total_NS_Hours DESC;
         </sql> 
 		<rowFormat>s|d|d|d</rowFormat>
-		<sheetName>Remote percentage to per region</sheetName>
+		<sheetName>Nightshift data per CC</sheetName>
 		<colCount>4</colCount>
     </data>
 	<template>302_Excel_Tool.xls</template>

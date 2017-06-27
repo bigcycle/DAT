@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <DATconfig>
-    <ID>1000</ID>
+    <ID>1001</ID>
     <name>Data Analysis Tool</name>
 	<data>   
         <sql>
             select Region, SUM(Hours) AS Region_Hours, (SUM(Hours) / (select SUM(Hours) from CDT)) AS Percentage from CDT GROUP BY Region order by Percentage DESC;
         </sql> 
 		<rowFormat>s|d|d|d</rowFormat>
-		<sheetName>Remote percentage to per region</sheetName>
+		<sheetName>Service delivery to per region</sheetName>
 		<colCount>4</colCount>
     </data>
 	<template>302_Excel_Tool.xls</template>

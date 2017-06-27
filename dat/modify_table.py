@@ -71,6 +71,7 @@ def modifyCDT(org_file, sheet, month):
     while r < rown2:
         c = 0
         row_datas2 = table2.row_values(r + 1 - rown)
+        row_datas2[1] = row_datas2[1].replace('#', 'TTM')
         for col2 in cols2:
             sheet.write(r, c, row_datas2[col2])
             c += 1
