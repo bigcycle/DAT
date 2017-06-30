@@ -30,8 +30,8 @@ sheetName = {'1010': 'CC UR Top 10',
              '1000': 'Remote percentage to per region'}
 
 # used in output.py to define the sheet Headers of each case
-sheetHeader = {'1010': ['Cost_Center', 'Total_Chargable_Hours', 'Headcount', 'Target_Hours', 'UR'],
-               '1009': ['Cost_Center', 'Total_Chargable_Hours', 'Headcount', 'Target_Hours', 'UR'],
+sheetHeader = {'1010': ['Total_Chargable_Hours', 'Headcount', 'Target_Hours', 'Cost_Center', 'Manager', 'UR'],
+               '1009': ['Total_Chargable_Hours', 'Headcount', 'Target_Hours', 'Cost_Center', 'Manager', 'UR'],
                '1008': ['Individual_Total_Hours', 'PersonnelNo', 'Name', 'CostCenter', 'LM', 'UR'],
                '1007': ['Individual_Total_Hours', 'PersonnelNo', 'Name', 'CostCenter', 'LM', 'UR'],
                '1006': ['Individual_Total_Hours', 'PersonnelNo', 'Name', 'CostCenter', 'LM', 'UR'],

@@ -3,21 +3,30 @@
     <ID>1009</ID>
     <name>Data Analysis Tool</name>
 	<data>   
-		<sql> 
+        <sql> 
+            create temporary table tempFA
             select
             f1.CostCenter AS Cost_Center,
             f1.Hours AS Total_Chargable_Hours,
             (f2.Hours - CC.ManagerHC) AS Headcount,
             ((f2.Hours - CC.ManagerHC) * target_hours) AS Target_Hours,
-            (f1.Hours / ((f2.Hours - CC.ManagerHC) * target_hours)) AS UR
+            CC.Manager AS Manager
             from
-            (select * from Finance where CostCenter in (select CostCenter from CC) AND             Item="Total Chargeable hours (All resources)" AND EmployeeGroup='1') f1
+            (select * from Finance where CostCenter in (select CostCenter from CC) AND Item="Total Chargeable hours (All resources)" AND EmployeeGroup='1') f1
             inner join
-            (select * from Finance where CostCenter in (select CostCenter from CC) AND             Item="Average Headcount" AND EmployeeGroup='1') f2 on f2.CostCenter =             f1.CostCenter
-            inner join CC on f1.CostCenter = CC.CostCenter
-            order by UR limit 10;
-
-		</sql>
+            (select * from Finance where CostCenter in (select CostCenter from CC) AND Item="Average Headcount" AND EmployeeGroup='1') f2 on f2.CostCenter = f1.CostCenter
+            inner join CC on f1.CostCenter = CC.CostCenter;
+        </sql>
+        <sql>
+            select
+            SUM(Total_Chargable_Hours) AS Total_Chargable_Hours,
+            SUM(Headcount) AS Headcount,
+            SUM(Target_Hours) AS Target_Hours,
+            GROUP_CONCAT(Cost_Center SEPARATOR ' ') AS Cost_Centers,
+            Manager,
+            SUM(Total_Chargable_Hours) / SUM(Target_Hours) AS UR 
+            from tempFA group by Manager order by UR limit 10;
+        </sql>
         <sheetName>CC UR Bottom 10</sheetName>
 	</data>
 		<rowFormat>s|d|d|d|d</rowFormat>
