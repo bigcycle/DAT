@@ -9,12 +9,13 @@ def modify(org_file):
     opt = org_file.split('.')[0].split('_')
     file = xlwt.Workbook()
     sheet = file.add_sheet(opt[0])
-    c = 0
-    for header in headers[opt[0]]:
-        sheet.write(0, c, header)
-        c += 1
+    if opt[0] != 'Finance':
+        c = 0
+        for header in headers[opt[0]]:
+            sheet.write(0, c, header)
+            c += 1
     if opt[0] == "Finance":
-        modifyFinance(org_file, sheet, opt[1])
+        modifyFinance(org_file, sheet, opt[0])
     elif opt[0] == "CDT":
         modifyCDT(org_file, sheet, opt[1])
     elif opt[0] == "MUS":
@@ -25,13 +26,20 @@ def modify(org_file):
     return opt[0]
 
 
-def modifyFinance(org_file, sheet, month):
+def modifyFinance(org_file, sheet, header_key):
     data = xlrd.open_workbook(org_file)
     table = data.sheets()[0]
-    temp_row = map(lambda x: x.strip()[:3], table.row_values(31))
-    temp_col = temp_row.index(month)
-    cols = column['Finance']
-    cols.append(temp_col)
+    temp_row = map(lambda x: x.strip()[:7], table.row_values(30))
+    temp_col = temp_row.index("Overall")
+    cols = [x for x in range(0, temp_col)]
+    for x in [2, 4, 5]:
+        cols.remove(x)
+    header_row = map(lambda x: x.strip()[:3], table.row_values(31))
+    headers[header_key] = headers[header_key] + header_row[6:temp_col]
+    c = 0
+    for header in headers[header_key]:
+        sheet.write(0, c, header)
+        c += 1
     i = 33
     r = 1
     rown = table.nrows

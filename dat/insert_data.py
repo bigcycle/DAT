@@ -2,8 +2,7 @@
 
 import MySQLdb
 import xlrd
-# from .modify_data import modify_data
-# from .modify_data import modify_header
+from config import database, months
 from .createtable import createtable
 
 
@@ -16,7 +15,7 @@ def insertdb(table, db, cursor, _headers, __table__):
     while i < rows:
         row_datas = table.row_values(i)
         for _header in _headers:
-            if _header == "Hours" or _header == "ManagerHC":
+            if _header == "Hours" or _header == "ManagerHC" or _header in months:
                 if row_datas[_headers.index(_header)] != '':
                     col = col + \
                         "%d, " % int(row_datas[_headers.index(_header)])
@@ -55,7 +54,7 @@ def insert(file, table, init):
         createtable(table, headers)
     else:
         print "Add data to table %s \n" % table
-    db = MySQLdb.connect("localhost", "root", "root", "Data")
+    db = MySQLdb.connect("localhost", "root", "root", database)
     cursor = db.cursor()
     insertdb(sheet_data, db, cursor, headers, table)
     db.close()

@@ -2,12 +2,12 @@
 
 # used in fetch.py as target hours for each one in current month
 
-hours = {"Jan": 144,
-         "Feb": 152,
-         "Mar": 184,
-         "Apr": 144,
-         "May": 168,
-         "Jun": 176}
+months = {"Jan": 144,
+          "Feb": 152,
+          "Mar": 184,
+          "Apr": 144,
+          "May": 168,
+          "Jun": 176}
 
 # used in modify_table.py to define the columns to be fetched for each table
 column = {'CDT1': [1, 4, 5, 16, 17, 29],
@@ -17,7 +17,8 @@ column = {'CDT1': [1, 4, 5, 16, 17, 29],
           'CC': [1, 2, 3]}
 
 # used in output.py to define the sheet name of each case
-sheetName = {'1010': 'CC UR Top 10',
+sheetName = {'1011': 'ALL CC UR YTD',
+             '1010': 'CC UR Top 10',
              '1009': 'CC UR Bottom 10',
              '1008': 'Individual UR top 5 per CC',
              '1007': 'Individual UR Bottom 5 per CC',
@@ -44,7 +45,11 @@ sheetHeader = {'1010': ['Total_Chargable_Hours', 'Headcount', 'Target_Hours', 'C
 
 # used in modify_table.py to define the Headers of each table
 
-headers = {'Finance': ['Item', 'CostCenter', 'EmployeeGroup', 'Hours'],
+headers = {'Finance': ['Item', 'CostCenter', 'EmployeeGroup'],
            'CDT': ['Region', 'PersonnelNo', 'Name', 'Type', 'CostCenter', 'LM', 'Hours'],
            'MUS': ['Name', 'Date', 'PersonnelNo', 'CostCenter', 'Hours'],
            'CC': ['CostCenter', 'ManagerHC', 'Manager']}
+
+
+#
+database = "DataDev"

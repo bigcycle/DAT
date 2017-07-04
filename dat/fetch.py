@@ -2,6 +2,7 @@
 
 import xml.etree.ElementTree as ET
 import MySQLdb
+from config import database, months
 
 
 def parse(file):
@@ -18,7 +19,7 @@ def parse(file):
 
 
 def fetch(sqls, target):
-    db = MySQLdb.connect("localhost", "root", "root", "Data")
+    db = MySQLdb.connect("localhost", "root", "root", database)
     cursor = db.cursor()
     for sql in sqls:
         sql = sql.replace('target_hours', target)
@@ -34,7 +35,7 @@ def fetch(sqls, target):
 
 
 def fetch2(sqls, target):
-    db = MySQLdb.connect("localhost", "root", "root", "Data")
+    db = MySQLdb.connect("localhost", "root", "root", database)
     cursor = db.cursor()
     results = []
     sqls[3] = sqls[3].replace('target_hours', target)
@@ -61,6 +62,64 @@ def fetch2(sqls, target):
             print "SQL Error:", sqls[3] % str(i)
             raise e
         results += cursor.fetchall()
+        print results
         # results += [()]
     db.close()
     return results
+
+
+def fetch3():
+    db = MySQLdb.connect("localhost", "root", "root", database)
+    cursor = db.cursor()
+    sql = "DESC Finance"
+    try:
+        cursor.execute(sql)
+    except Exception, e:
+        print "SQL Error:", sql
+        raise e
+    sqls = """create temporary table tempFA
+select
+CC.Manager AS Manager,
+f1.CostCenter AS Cost_Center,
+"""
+    sqls2 = "select "
+    keys = [x[0] for x in cursor.fetchall()[4:]]
+    for key in keys:
+        sqls += """f1.month AS month,
+((f2.month - CC.ManagerHC) * """.replace('month', key) + str(months[key]) + """) AS month_Target_Hours,""".replace('month', key)
+        sqls2 += """(SUM(month) / SUM(month_Target_Hours)) AS month_UR,""".replace('month', key)
+
+    sqls = sqls[:-1]
+    sqls += """
+from
+(select * from Finance where CostCenter in (select CostCenter from CC) AND Item="Total Chargeable hours (All resources)" AND EmployeeGroup='1') f1
+inner join
+(select * from Finance where CostCenter in (select CostCenter from CC) AND Item="Average Headcount" AND EmployeeGroup='1') f2 on f2.CostCenter = f1.CostCenter
+inner join CC on f1.CostCenter = CC.CostCenter
+"""
+    sqls2 += "("
+    sqls2 += " + ".join(map(lambda x: "SUM(month)".replace('month', x), keys))
+    sqls2 += ") / ("
+    sqls2 += " + ".join(map(lambda x: "SUM(month_Target_Hours)".replace('month', x), keys))
+    sqls2 += ") AS YTD_UR,"
+    sqls2 += """GROUP_CONCAT(Cost_Center SEPARATOR ' ') AS Cost_Centers,
+Manager
+from tempFA group by Manager order by YTD_UR DESC
+"""
+    print sqls
+    print sqls2
+    try:
+        cursor.execute(sqls)
+        cursor.execute(sqls2)
+    except Exception, e:
+        print "SQL Error:", sqls
+        raise e
+    results = cursor.fetchall()
+    try:
+        cursor.execute('desc tempFA')
+    except Exception, e:
+        raise e
+    headers = [header[0] for header in cursor.fetchall()]
+    headers.append('YTD_UR')
+    db.close()
+    return [headers, results]

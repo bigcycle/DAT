@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 
-from fetch import fetch, parse, fetch2
+from fetch import fetch, parse, fetch2, fetch3
 import xlwt
 import time
 from config import sheetHeader, sheetName
@@ -9,7 +9,7 @@ from config import sheetHeader, sheetName
 def output(reports, target):
     results = {}
     if reports == "ALL":
-        reports = "1000,1001,1002,1003,1004,1005,1006,1007,1008,1009,1010"
+        reports = "1000,1001,1002,1003,1004,1005,1006,1007,1008"
     templates = reports.split(',')
     for template in templates:
         data = parse('template/%s.xml' % template)
@@ -17,8 +17,9 @@ def output(reports, target):
             results[template] = fetch2(data['sqls'], target)
         else:
             results[template] = fetch(data['sqls'], target)
-    # for k, v in results.items():
-    #     print k, v, '\n'
+    fetch3_result = fetch3()
+    results['1011'] = fetch3_result[0]
+    sheetHeader['1011'] = fetch3_result[1]
     return results
 
 
