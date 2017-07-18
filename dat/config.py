@@ -39,7 +39,7 @@ sheetHeader = {'1010': ['Total_Chargable_Hours', 'Headcount', 'Target_Hours', 'C
                '1005': ['Individual_Total_Hours', 'PersonnelNo', 'Name', 'CostCenter', 'LM', 'UR'],
                '1003': ['Total_NS_Hours', 'CostCenter', 'Manager'],
                '1004': ['Total_NS_Hours', 'PersonnelNo', 'Name', 'CostCenter', 'Manager'],
-               '1002': ['Total_HC_Hours', 'Total_Hours', 'Remote_Percentage'],
+               '1002': ['Total_HC_Hours', 'Onsite_Hours', 'Total_Hours', 'Remote_Percentage'],
                '1001': ['Region', 'Region_Hours', 'Percentage'],
                '1000': ['Region', 'Region_HC_Hours', 'Region_Hours', 'Region_Remote_Percentage']}
 

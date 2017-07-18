@@ -3,7 +3,7 @@
 import getopt
 import sys
 from dat.insert_data import insert
-from dat.output import output, write
+from dat.output import output, writeXLSX
 from dat.modify_table import modify
 
 help = 'Usage: python DAT.py [OPTION]...\n\n'
@@ -62,7 +62,7 @@ def main(para):
         print "Start to import data to table %s ...\n" % table
         insert(para['__file__'], table, para['__init__'])
     elif para['__mode__'] == 2:
-        write(output(para['__report__'], para['__target__']))
+        writeXLSX(output(para['__report__'], para['__target__']))
 
 
 if __name__ == '__main__':

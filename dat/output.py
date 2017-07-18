@@ -4,6 +4,7 @@ from fetch import fetch, parse, fetch2, fetch3
 import xlwt
 import time
 from config import sheetHeader, sheetName
+from openpyxl import Workbook
 
 
 def output(reports, target):
@@ -40,3 +41,25 @@ def write(results):
             r += 1
     file.save('report/DAT_report_%s.xls' %
               time.strftime('%Y%m%d', time.localtime()))
+
+
+def writeXLSX(results):
+    wb = Workbook()
+    for k, v in results.items():
+        ws = wb.create_sheet(sheetName[k])
+        r = 2
+        c = 1
+        for header in sheetHeader[k]:
+            ws.cell(row=1, column=c).value = header
+            # table.write(0, c, header)
+            c += 1
+        for row in v:
+            c = 1
+            for cell_content in row:
+                ws.cell(row=r, column=c).value = cell_content
+                # table.write(r, c, cell)
+                c += 1
+            r += 1
+    wb.remove_sheet(wb.get_sheet_by_name('Sheet'))
+    wb.save('report/DAT_report_%s.xlsx' %
+            time.strftime('%Y%m%d', time.localtime()))
