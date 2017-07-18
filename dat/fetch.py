@@ -22,7 +22,8 @@ def fetch(sqls, target):
     db = MySQLdb.connect("localhost", "root", "root", database)
     cursor = db.cursor()
     for sql in sqls:
-        sql = sql.replace('target_hours', target)
+        sql = sql.replace('target_hours', str(months[target]))
+        sql = sql.replace('.Hours', '.' + target)
         try:
             cursor.execute(sql)
             # print "curret sql:", sql
@@ -38,7 +39,7 @@ def fetch2(sqls, target):
     db = MySQLdb.connect("localhost", "root", "root", database)
     cursor = db.cursor()
     results = []
-    sqls[3] = sqls[3].replace('target_hours', target)
+    sqls[3] = sqls[3].replace('target_hours', str(months[target]))
     try:
         row = cursor.execute(sqls[0])
     except Exception, e:
@@ -62,8 +63,6 @@ def fetch2(sqls, target):
             print "SQL Error:", sqls[3] % str(i)
             raise e
         results += cursor.fetchall()
-        print results
-        # results += [()]
     db.close()
     return results
 
@@ -79,7 +78,6 @@ def fetch3():
         raise e
     sqls = """create temporary table tempFA
 select
-CC.Manager AS Manager,
 f1.CostCenter AS Cost_Center,
 """
     sqls2 = "select "
@@ -88,9 +86,7 @@ f1.CostCenter AS Cost_Center,
         sqls += """f1.month AS month,
 ((f2.month - CC.ManagerHC) * """.replace('month', key) + str(months[key]) + """) AS month_Target_Hours,""".replace('month', key)
         sqls2 += """(SUM(month) / SUM(month_Target_Hours)) AS month_UR,""".replace('month', key)
-
-    sqls = sqls[:-1]
-    sqls += """
+    sqls += """CC.Manager AS Manager
 from
 (select * from Finance where CostCenter in (select CostCenter from CC) AND Item="Total Chargeable hours (All resources)" AND EmployeeGroup='1') f1
 inner join
@@ -106,8 +102,6 @@ inner join CC on f1.CostCenter = CC.CostCenter
 Manager
 from tempFA group by Manager order by YTD_UR DESC
 """
-    print sqls
-    print sqls2
     try:
         cursor.execute(sqls)
         cursor.execute(sqls2)
@@ -115,11 +109,7 @@ from tempFA group by Manager order by YTD_UR DESC
         print "SQL Error:", sqls
         raise e
     results = cursor.fetchall()
-    try:
-        cursor.execute('desc tempFA')
-    except Exception, e:
-        raise e
-    headers = [header[0] for header in cursor.fetchall()]
-    headers.append('YTD_UR')
+    headers = [key + "_UR" for key in keys]
+    headers += ['YTD_UR', 'Cost_Centers', 'Manager']
     db.close()
     return [headers, results]

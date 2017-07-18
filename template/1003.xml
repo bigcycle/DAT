@@ -4,8 +4,11 @@
     <name>Data Analysis Tool</name>
 	<data>   
         <sql>
-            select SUM(Hours) AS Total_NS_Hours, CostCenter from MUS GROUP BY CostCenter order by Total_NS_Hours DESC;
+            create temporary table mus_temp select SUM(Hours) AS Total_NS_Hours, CostCenter, Manager from MUS GROUP BY CostCenter, Manager order by Total_NS_Hours DESC;
         </sql> 
+        <sql>
+            select SUM(Total_NS_Hours) AS Total_NS_Hours, GROUP_CONCAT(CostCenter SEPARATOR ' ') AS CostCenter, Manager from mus_temp GROUP BY Manager order by Total_NS_Hours DESC;
+        </sql>
 		<rowFormat>s|d|d|d</rowFormat>
 		<sheetName>Nightshift data per CC</sheetName>
 		<colCount>4</colCount>

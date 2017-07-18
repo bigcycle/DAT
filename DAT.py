@@ -19,7 +19,7 @@ help += '''Output options: (with '-o' option)
 -r | --report                   Templates which will be included in the report, if more than one template,use ',' to seperate.
                                 e.g: '-r 1000,1001,1002'
                                 If all the templates need to be included use '-r ALL'
--t | --target                   Target hours for current month.
+-t | --target                   Target month, e.g May or Jun,
 \n'''
 
 
@@ -38,7 +38,7 @@ def get_para(argv):
     for opt, arg in opts:
         if opt in ("-h", "--help"):
             print 'python DAT.py -i <file> [-a]'
-            print 'python DAT.py -o -r <report> -t <target_hours>'
+            print 'python DAT.py -o -r <report> -t <target_month>'
             print help
             sys.exit()
         elif opt in ("-i", ):
