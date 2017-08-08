@@ -4,8 +4,18 @@
     <name>Data Analysis Tool</name>
 	<data>   
         <sql>
-            select SUM(Hours) AS Individual_Total_Hours, PersonnelNo, Name, CostCenter, LM, (SUM(Hours) / target_hours) AS UR from CDT where PersonnelNo != '#' GROUP BY PersonnelNo, Name, CostCenter, LM order by UR DESC limit 50;
+            create temporary table tempCDT select SUM(Hours) AS Individual_Total_Hours, PersonnelNo, Name, CostCenter from CDT where PersonnelNo != '#' GROUP BY PersonnelNo, Name, CostCenter
         </sql> 
+        <sql>
+            select
+            tempCDT.Individual_Total_Hours, 
+            tempCDT.PersonnelNo, 
+            tempCDT.Name, 
+            tempCDT.CostCenter,
+            CC.Manager,
+            (tempCDT.Individual_Total_Hours / target_hours) AS UR
+            from tempCDT inner join CC on tempCDT.CostCenter=CC.CostCenter order by UR DESC limit 100
+        </sql>
 		<rowFormat>s|d|d|d</rowFormat>
 		<sheetName>Top 50 individual UR in ITC</sheetName>
 		<colCount>4</colCount>

@@ -25,6 +25,8 @@ def insertdb(table, db, cursor, _headers, __table__):
                 if isinstance(row_datas[_headers.index(_header)], float):
                     row_datas[_headers.index(_header)] = int(
                         row_datas[_headers.index(_header)])
+                else:
+                    row_datas[_headers.index(_header)] = row_datas[_headers.index(_header)].strip()
                 col = col + '"%s", ' % row_datas[_headers.index(_header)]
         # col = modify_data(col)
         sql_insert = "insert into %s (%s) values (%s)" % (

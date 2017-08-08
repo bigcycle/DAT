@@ -22,6 +22,8 @@ def modify(org_file):
         modifyMUS(org_file, sheet)
     elif opt[0] == "CC":
         modifyCC(org_file, sheet)
+    elif opt[0] == "LeftEmp":
+        modifyLeftEmp(org_file, sheet)
     file.save('source/' + org_file)
     return opt[0]
 
@@ -58,34 +60,44 @@ def modifyFinance(org_file, sheet, header_key):
 
 def modifyCDT(org_file, sheet, month):
     data = xlrd.open_workbook(org_file)
-    table = data.sheets()[1]
+    table = data.sheet_by_name(u'Source Data')
     temp_row = table.row_values(0)
     temp_col = temp_row.index(month)
+    ytd_col = temp_row.index("YTD")
     cols = column['CDT1']
     cols.append(temp_col)
-    r = 1
-    rown = table.nrows
-    while r < rown:
+    cols.append(ytd_col)
+    read_row = 1
+    write_row = 1
+    rownum = table.nrows
+    while read_row < rownum:
         c = 0
-        row_datas = table.row_values(r)
-        for col in cols:
-            sheet.write(r, c, row_datas[col])
-            c += 1
-        r += 1
-    table2 = data.sheets()[2]
+        row_datas = table.row_values(read_row)
+        if row_datas[1].strip() != '':
+            for col in cols:
+                sheet.write(write_row, c, row_datas[col])
+                c += 1
+            write_row += 1
+        read_row += 1
+    table2 = data.sheet_by_name(u'Unassigned&TTM')
     temp_row2 = table2.row_values(0)
     temp_col2 = temp_row2.index(month)
+    ytd_col2 = temp_row2.index("YTD")
     cols2 = column['CDT2']
     cols2.append(temp_col2)
-    rown2 = rown + table2.nrows - 1
-    while r < rown2:
+    cols2.append(ytd_col2)
+    rownum2 = table2.nrows
+    read_row = 1
+    while read_row < rownum2:
         c = 0
-        row_datas2 = table2.row_values(r + 1 - rown)
-        row_datas2[1] = row_datas2[1].replace('#', 'TTM')
-        for col2 in cols2:
-            sheet.write(r, c, row_datas2[col2])
-            c += 1
-        r += 1
+        row_datas2 = table2.row_values(read_row)
+        if row_datas2[1].strip() != '':
+            row_datas2[1] = row_datas2[1].replace('#', 'TTM')
+            for col2 in cols2:
+                sheet.write(write_row, c, row_datas2[col2])
+                c += 1
+            write_row += 1
+        read_row += 1
 
 
 def modifyMUS(org_file, sheet):
@@ -120,11 +132,20 @@ def modifyCC(org_file, sheet):
             sheet.write(i - 3, c, row_datas[col])
             c += 1
         i += 1
-# def main():
-#     modify('Finance_2017_Jan.xlsx')
-#     modify('MUS_2017_Jan.xls')
-#     modify('CDT_2017_Jan.xls')
 
 
-# if __name__ == '__main__':
-#     main()
+def modifyLeftEmp(org_file, sheet):
+    data = xlrd.open_workbook(org_file, encoding_override='utf-8')
+    table = data.sheets()[0]
+    cols = [2, 3, 4]
+    rown = table.nrows
+    i = 11
+    while i < rown:
+        c = 0
+        row_datas = table.row_values(i)
+        for col in cols:
+            if not isinstance(row_datas[col], float):
+                row_datas[col] = row_datas[col].strip()
+            sheet.write(i - 10, c, row_datas[col])
+            c += 1
+        i += 1

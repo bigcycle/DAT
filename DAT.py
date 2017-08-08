@@ -62,7 +62,7 @@ def main(para):
         print "Start to import data to table %s ...\n" % table
         insert(para['__file__'], table, para['__init__'])
     elif para['__mode__'] == 2:
-        writeXLSX(output(para['__report__'], para['__target__']))
+        writeXLSX(output(para['__report__'], para['__target__']), para['__target__'])
 
 
 if __name__ == '__main__':

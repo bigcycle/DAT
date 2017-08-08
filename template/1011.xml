@@ -10,18 +10,15 @@
             create temporary table region_hc select Region, SUM(Hours) AS Region_HC_Hours from CDT where Type='HC' GROUP BY Region;
         </sql>
         <sql>
+            create temporary table region2market
             select 
-            r1.Region,
-            r2.Region_HC_Hours,
-            (r1.Region_Hours - r2.Region_HC_Hours) AS Region_on_site_Hours,
-            r1.Region_Hours,
-            (r2.Region_HC_Hours / r1.Region_Hours) AS Region_Remote_Percentage
+            r1.Region AS Region,
+            r2.Region_HC_Hours AS Region_HC_Hours,
+            r1.Region_Hours AS Region_Hours
             from
             region_tt r1
             inner join
             region_hc r2 on r1.Region=r2.Region
-            where r1.Region_Hours > 0
-            order by Region_Remote_Percentage DESC;
         </sql>
 		<rowFormat>s|d|d|d</rowFormat>
 		<sheetName>Remote percentage to per region</sheetName>

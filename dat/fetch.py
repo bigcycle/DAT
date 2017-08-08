@@ -2,7 +2,7 @@
 
 import xml.etree.ElementTree as ET
 import MySQLdb
-from config import database, months
+from config import database, months, markets
 
 
 def parse(file):
@@ -67,6 +67,7 @@ def fetch2(sqls, target):
     return results
 
 
+#fetch data for template 1010, YTD data
 def fetch3():
     db = MySQLdb.connect("localhost", "root", "root", database)
     cursor = db.cursor()
@@ -113,3 +114,32 @@ from tempFA group by Manager order by YTD_UR DESC
     headers += ['YTD_UR', 'Cost_Centers', 'Manager']
     db.close()
     return [headers, results]
+
+
+def fetch4(sqls):
+    db = MySQLdb.connect("localhost", "root", "root", database)
+    cursor = db.cursor()
+    results = []
+    for sql in sqls:
+        try:
+            cursor.execute(sql)
+            # print "curret sql:", sql
+        except Exception, e:
+            print "SQL Error:", sql
+            raise e
+    for k, v in markets.iteritems():
+        regions = '("' + '","'.join(v) + '")'
+        sql = """select "%s" AS Market,
+"%s" AS Regions,
+SUM(Region_HC_Hours) AS Market_Remote_Hours,
+SUM(Region_Hours) AS Market_Total_Hours,
+SUM(Region_HC_Hours) / SUM(Region_Hours) AS Market_Remote_Percentage
+from region2market where Region in %s""" % (k, ' '.join(v), regions)
+        try:
+            cursor.execute(sql)
+            results += cursor.fetchall()
+        except Exception, e:
+            print "SQL Error:", sql
+            raise e
+    db.close()
+    return results

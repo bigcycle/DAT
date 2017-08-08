@@ -4,13 +4,20 @@
     <name>Data Analysis Tool</name>
 	<data>   
         <sql>
-            create temporary table cc_t select CostCenter from CDT GROUP BY CostCenter;
+            create temporary table temp select SUM(Hours) AS Individual_Total_Hours, PersonnelNo, Name, CostCenter from CDT where PersonnelNo != '#' and PersonnelNo not in (select EmployeeNo from LeftEmp) GROUP BY PersonnelNo, Name, CostCenter;
         </sql>
         <sql>
-            create temporary table temp select SUM(Hours) AS Individual_Total_Hours, PersonnelNo, Name, CostCenter, LM from CDT GROUP BY PersonnelNo, Name, CostCenter, LM;
+            create temporary table temp2 
+            select
+            temp.Individual_Total_Hours, 
+            temp.PersonnelNo, 
+            temp.Name, 
+            temp.CostCenter,
+            CC.Manager
+            from temp inner join CC on temp.CostCenter=CC.CostCenter 
         </sql>
-        <sql>select count(CostCenter) from cc_t</sql>
-        <sql>select *, (Individual_Total_Hours / target_hours) AS UR from temp  where CostCenter = (select CostCenter from cc_t limit %s,1) order by UR limit 5;</sql> 
+        <sql>select count(CostCenter) from CC</sql>
+        <sql>select *, (Individual_Total_Hours / target_hours) AS UR from temp2 where CostCenter = (select CostCenter from CC limit %s,1) order by UR limit 5;</sql> 
 		<rowFormat>s|d|d|d</rowFormat>
 		<sheetName>Individual UR Bottom 5 per CC</sheetName>
 		<colCount>4</colCount>
