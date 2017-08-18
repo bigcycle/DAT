@@ -46,7 +46,7 @@ def insertdb(table, db, cursor, _headers, __table__):
 
 
 def insert(file, table, init):
-    data = xlrd.open_workbook('source/%s' % file)
+    data = xlrd.open_workbook('source/%s' % file.split('.')[0] + ".xls")
     sheet_data = data.sheets()[0]
     headers = []
     headers.extend(sheet_data.row_values(0))

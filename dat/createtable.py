@@ -10,7 +10,7 @@ def createtable(table, headers):
         if header == "Hours" or header == "ManagerHC" or header in months or header == "YTD":
             sql = sql + " `%s` int," % header
         else:
-            sql = sql + " `%s` varchar(50)," % header
+            sql = sql + " `%s` varchar(200)," % header
     sql = sql + "primary key (`id`)) engine=innodb default charset=utf8"
     db = MySQLdb.connect("localhost", "root", "root", database)
     cursor = db.cursor()

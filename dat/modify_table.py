@@ -2,7 +2,7 @@
 
 import xlrd
 import xlwt
-from config import column, headers
+from config import column, headers, column_names
 
 
 def modify(org_file):
@@ -24,7 +24,7 @@ def modify(org_file):
         modifyCC(org_file, sheet)
     elif opt[0] == "LeftEmp":
         modifyLeftEmp(org_file, sheet)
-    file.save('source/' + org_file)
+    file.save('source/' + org_file.split('.')[0] + ".xls")
     return opt[0]
 
 
@@ -61,12 +61,14 @@ def modifyFinance(org_file, sheet, header_key):
 def modifyCDT(org_file, sheet, month):
     data = xlrd.open_workbook(org_file)
     table = data.sheet_by_name(u'Source Data')
-    temp_row = table.row_values(0)
-    temp_col = temp_row.index(month)
-    ytd_col = temp_row.index("YTD")
-    cols = column['CDT1']
-    cols.append(temp_col)
-    cols.append(ytd_col)
+    # temp_row = table.row_values(0)
+    # temp_col = temp_row.index(month)
+    # ytd_col = temp_row.index("YTD")
+    # cols = column['CDT1']
+    # cols.append(temp_col)
+    # cols.append(ytd_col)
+    column_names['CDT1'].insert(-1, month)
+    cols = getColumns(table.row_values(0), column_names['CDT1'])
     read_row = 1
     write_row = 1
     rownum = table.nrows
@@ -80,12 +82,14 @@ def modifyCDT(org_file, sheet, month):
             write_row += 1
         read_row += 1
     table2 = data.sheet_by_name(u'Unassigned&TTM')
-    temp_row2 = table2.row_values(0)
-    temp_col2 = temp_row2.index(month)
-    ytd_col2 = temp_row2.index("YTD")
-    cols2 = column['CDT2']
-    cols2.append(temp_col2)
-    cols2.append(ytd_col2)
+    # temp_row2 = table2.row_values(0)
+    # temp_col2 = temp_row2.index(month)
+    # ytd_col2 = temp_row2.index("YTD")
+    # cols2 = column['CDT2']
+    # cols2.append(temp_col2)
+    # cols2.append(ytd_col2)
+    column_names['CDT2'].insert(-1, month)
+    cols2 = getColumns(table2.row_values(0), column_names['CDT2'])
     rownum2 = table2.nrows
     read_row = 1
     while read_row < rownum2:
@@ -137,15 +141,29 @@ def modifyCC(org_file, sheet):
 def modifyLeftEmp(org_file, sheet):
     data = xlrd.open_workbook(org_file, encoding_override='utf-8')
     table = data.sheets()[0]
-    cols = [2, 3, 4]
+    cols = [1, 2, 0]
     rown = table.nrows
-    i = 11
+    i = 1
     while i < rown:
         c = 0
         row_datas = table.row_values(i)
         for col in cols:
             if not isinstance(row_datas[col], float):
                 row_datas[col] = row_datas[col].strip()
-            sheet.write(i - 10, c, row_datas[col])
+            sheet.write(i, c, row_datas[col])
             c += 1
         i += 1
+
+
+def getColumns(row_value, column_names):
+    columns = []
+    for column_name in column_names:
+        try:
+            column = row_value.index(column_name)
+            columns.append(column)
+        except Exception, e:
+            print "Can't find %s in current row." % column_name
+            raise e
+            return False
+        row_value[column] = "dummy"
+    return columns

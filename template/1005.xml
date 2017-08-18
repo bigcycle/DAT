@@ -4,8 +4,8 @@
     <name>Data Analysis Tool</name>
 	<data>   
         <sql>
-            create temporary table tempCDT select SUM(Hours) AS Individual_Total_Hours, PersonnelNo, Name, CostCenter from CDT where PersonnelNo != '#' and PersonnelNo not in (select EmployeeNo from LeftEmp) GROUP BY PersonnelNo, Name, CostCenter 
-        </sql> 
+            create temporary table tempCDT select SUM(Hours) AS Individual_Total_Hours, PersonnelNo, Name, RIGHT(GROUP_CONCAT(DISTINCT CostCenter SEPARATOR ' '), 10) AS CostCenter from CDT where PersonnelNo != '#' and PersonnelNo not in (select EmployeeNo from LeftEmp) GROUP BY PersonnelNo, Name
+        </sql>
         <sql>
             select
             tempCDT.Individual_Total_Hours, 
@@ -14,7 +14,7 @@
             tempCDT.CostCenter,
             CC.Manager,
             (tempCDT.Individual_Total_Hours / target_hours) AS UR 
-            from tempCDT inner join CC on tempCDT.CostCenter=CC.CostCenter order by UR limit 100
+            from tempCDT inner join CC on tempCDT.CostCenter=CC.CostCenter order by UR limit 200
         </sql>
 		<rowFormat>s|d|d|d</rowFormat>
 		<sheetName>Bottom 100 individual UR in ITC</sheetName>

@@ -7,8 +7,14 @@ months = {"Jan": 144,
           "Mar": 184,
           "Apr": 144,
           "May": 168,
-          "Jun": 176}
+          "Jun": 176,
+          "Jul": 168}
 
+column_names = {'CDT1': ["Receiving Region", "Personnel Record", "Personnel Record", "Accounting Indicator", "Sender Cost Center", "LM", "YTD"],
+                'CDT2': ["Receiving Region", "Personnel Record", "Personnel Record", "Accounting Indicator", "Sender Cost Center", "LM", "YTD"],
+                'MUS': [],
+                'Finance': [],
+                'CC': []}
 # used in modify_table.py to define the columns to be fetched for each table
 column = {'CDT1': [1, 4, 5, 16, 17, 29],
           'CDT2': [1, 4, 5, 16, 17, 28],
