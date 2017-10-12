@@ -8,11 +8,12 @@ months = {"Jan": 144,
           "Apr": 144,
           "May": 168,
           "Jun": 176,
-          "Jul": 168}
+          "Jul": 168,
+          "Aug": 184}
 
 column_names = {'CDT1': ["Receiving Region", "Personnel Record", "Personnel Record", "Accounting Indicator", "Sender Cost Center", "LM", "YTD"],
                 'CDT2': ["Receiving Region", "Personnel Record", "Personnel Record", "Accounting Indicator", "Sender Cost Center", "LM", "YTD"],
-                'MUS': [],
+                'MUS': ["Empl./appl.name", "Date", "Pers.No.", "Send. CCtr", "CC Owner(same as HRMS)", "     Hours"],
                 'Finance': [],
                 'CC': []}
 # used in modify_table.py to define the columns to be fetched for each table
@@ -23,10 +24,14 @@ column = {'CDT1': [1, 4, 5, 16, 17, 29],
           'CC': [1, 2, 3]}
 
 # used in output.py to define the sheet name of each case
-sheetName = {'1020': 'ALL CC UR YTD',
+sheetName = {'1020': 'ALL Manager UR YTD',
+             '1015': 'Head UR Top 10',
+             '1014': 'Head UR Bottom 10',
+             '1013': 'CC UR Top 10',
+             '1012': 'CC UR Bottom 10',
              '1011': 'Remote percentage to per market',
-             '1010': 'CC UR Top 10',
-             '1009': 'CC UR Bottom 10',
+             '1010': 'Manager UR Top 10',
+             '1009': 'Manager UR Bottom 10',
              '1008': 'Individual UR top 5 per CC',
              '1007': 'Individual UR Bottom 5 per CC',
              '1006': 'Top 50 individual UR in IT&C',
@@ -49,7 +54,11 @@ sheetHeader = {'1010': ['Total_Chargable_Hours', 'Headcount', 'Target_Hours', 'C
                '1002': ['Total_HC_Hours', 'Onsite_Hours', 'Total_Hours', 'Remote_Percentage', 'Remote_Percentage_YTD'],
                '1001': ['Region', 'Region_Hours', 'Percentage'],
                '1000': ['Region', 'Region_HC_Hours', 'Region_OnSite_Hours', 'Region_Hours', 'Region_Remote_Percentage'],
-               '1011': ['Market', 'Regions', 'Market_Remote_Hours', 'Market_Total_Hours', 'Market_Remote_Percentage']}
+               '1011': ['Market', 'Regions', 'Market_Remote_Hours', 'Market_Total_Hours', 'Market_Remote_Percentage'],
+               '1012': ['Cost_Center', 'Total_Chargable_Hours', 'Headcount', 'Target_Hours', 'Manager', 'UR'],
+               '1013': ['Cost_Center', 'Total_Chargable_Hours', 'Headcount', 'Target_Hours', 'Manager', 'UR'],
+               '1014': ['Total_Chargable_Hours', 'Headcount', 'Target_Hours', 'Cost_Center', 'Manager', 'UR'],
+               '1015': ['Total_Chargable_Hours', 'Headcount', 'Target_Hours', 'Cost_Center', 'Manager', 'UR']}
 
 # used in modify_table.py to define the Headers of each table
 

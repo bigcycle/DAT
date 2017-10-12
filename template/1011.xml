@@ -7,7 +7,7 @@
             create temporary table region_tt select Region, SUM(Hours) AS Region_Hours from CDT GROUP BY Region;
         </sql> 
         <sql>
-            create temporary table region_hc select Region, SUM(Hours) AS Region_HC_Hours from CDT where Type='HC' GROUP BY Region;
+            create temporary table region_hc select Region, SUM(Hours) AS Region_HC_Hours from CDT where Type='HC' or Type='#' or Type='Not assigned' GROUP BY Region;
         </sql>
         <sql>
             create temporary table region2market

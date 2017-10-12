@@ -27,7 +27,7 @@
             SUM(Total_Chargable_Hours) / SUM(Target_Hours) AS UR 
             from tempFA group by Manager order by UR limit 10;
         </sql>
-        <sheetName>CC UR Bottom 10</sheetName>
+        <sheetName>Manger UR Bottom 10</sheetName>
 	</data>
 		<rowFormat>s|d|d|d|d</rowFormat>
 		<sheetName>CC UR Top 10</sheetName>

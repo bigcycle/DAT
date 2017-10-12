@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<DATconfig>
+    <ID>1009</ID>
+    <name>Data Analysis Tool</name>
+	<data>   
+        <sql> 
+            create temporary table tempFA
+            select
+            f1.CostCenter AS Cost_Center,
+            f1.Hours AS Total_Chargable_Hours,
+            (f2.Hours - CC.ManagerHC) AS Headcount,
+            ((f2.Hours - CC.ManagerHC) * target_hours) AS Target_Hours,
+            CC.Manager AS Manager
+            from
+            (select * from Finance where CostCenter in (select CostCenter from CC) AND Item="Total Chargeable hours (All resources)" AND EmployeeGroup='1') f1
+            inner join
+            (select * from Finance where CostCenter in (select CostCenter from CC) AND Item="Average Headcount" AND EmployeeGroup='1') f2 on f2.CostCenter = f1.CostCenter
+            inner join CC on f1.CostCenter = CC.CostCenter;
+        </sql>
+        <sql>
+            select *, (Total_Chargable_Hours / Target_Hours) AS UR from tempFA order by UR DESC limit 10;
+        </sql>
+        <sheetName>CC UR Top 10</sheetName>
+	</data>
+		<rowFormat>s|d|d|d|d</rowFormat>
+		<sheetName>CC UR Top 10</sheetName>
+		<colCount>5</colCount>
+	<template>302_Excel_Tool.xls</template>
+    <output>302_Excel_Tool_${endTime:yyMMdd}.xls</output>
+</DATconfig>

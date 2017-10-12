@@ -75,7 +75,7 @@ def modifyCDT(org_file, sheet, month):
     while read_row < rownum:
         c = 0
         row_datas = table.row_values(read_row)
-        if row_datas[1].strip() != '':
+        if row_datas[1].strip() != '' and row_datas[4] != '#':
             for col in cols:
                 sheet.write(write_row, c, row_datas[col])
                 c += 1
@@ -95,7 +95,7 @@ def modifyCDT(org_file, sheet, month):
     while read_row < rownum2:
         c = 0
         row_datas2 = table2.row_values(read_row)
-        if row_datas2[1].strip() != '':
+        if row_datas2[1].strip() != '' and row_datas2[4] != '#':
             row_datas2[1] = row_datas2[1].replace('#', 'TTM')
             for col2 in cols2:
                 sheet.write(write_row, c, row_datas2[col2])
@@ -107,7 +107,7 @@ def modifyCDT(org_file, sheet, month):
 def modifyMUS(org_file, sheet):
     data = xlrd.open_workbook(org_file)
     table = data.sheets()[0]
-    cols = column['MUS']
+    cols = getColumns(table.row_values(0), column_names['MUS'])
     r = 1
     rown = table.nrows
     while r < rown:
@@ -137,6 +137,22 @@ def modifyCC(org_file, sheet):
             c += 1
         i += 1
 
+
+# def modifyLeftEmp(org_file, sheet):
+#     data = xlrd.open_workbook(org_file, encoding_override='utf-8')
+#     table = data.sheets()[0]
+#     cols = [1, 2, 0]
+#     rown = table.nrows
+#     i = 1
+#     while i < rown:
+#         c = 0
+#         row_datas = table.row_values(i)
+#         for col in cols:
+#             if not isinstance(row_datas[col], float):
+#                 row_datas[col] = row_datas[col].strip()
+#             sheet.write(i, c, row_datas[col])
+#             c += 1
+#         i += 1
 
 def modifyLeftEmp(org_file, sheet):
     data = xlrd.open_workbook(org_file, encoding_override='utf-8')

@@ -4,7 +4,7 @@
     <name>Data Analysis Tool</name>
 	<data>   
         <sql>
-            select (select SUM(Hours) from CDT where Type='HC') AS Total_HC_Hours, ((select SUM(Hours) from CDT) - (select SUM(Hours) from CDT where Type='HC')) AS Onsite_Hours, (select SUM(Hours) from CDT) AS Total_Hours, ((select SUM(Hours) from CDT where Type='HC') / (select SUM(Hours) from CDT)) AS Remote_Percentage, ((select SUM(YTD) from CDT where Type='HC') / (select SUM(YTD) from CDT)) AS Remote_Percentage_YTD; 
+            select (select SUM(Hours) from CDT where Type='HC' or Type='#' or Type='Not assigned') AS Total_HC_Hours, ((select SUM(Hours) from CDT) - (select SUM(Hours) from CDT where Type='HC' or Type='#' or Type='Not assigned')) AS Onsite_Hours, (select SUM(Hours) from CDT) AS Total_Hours, ((select SUM(Hours) from CDT where Type='HC' or Type='#' or Type='Not assigned') / (select SUM(Hours) from CDT)) AS Remote_Percentage, ((select SUM(YTD) from CDT where Type='HC' or Type='#' or Type='Not assigned') / (select SUM(YTD) from CDT)) AS Remote_Percentage_YTD; 
         </sql> 
 		<rowFormat>s|d|d|d</rowFormat>
 		<sheetName>Remote percentage</sheetName>
