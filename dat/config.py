@@ -9,7 +9,8 @@ months = {"Jan": 144,
           "May": 168,
           "Jun": 176,
           "Jul": 168,
-          "Aug": 184}
+          "Aug": 184,
+          "Sep": 188}
 
 column_names = {'CDT1': ["Receiving Region", "Personnel Record", "Personnel Record", "Accounting Indicator", "Sender Cost Center", "LM", "YTD"],
                 'CDT2': ["Receiving Region", "Personnel Record", "Personnel Record", "Accounting Indicator", "Sender Cost Center", "LM", "YTD"],
@@ -21,7 +22,7 @@ column = {'CDT1': [1, 4, 5, 16, 17, 29],
           'CDT2': [1, 4, 5, 16, 17, 28],
           'MUS': [0, 1, 7, 11, 12, 17],
           'Finance': [0, 1, 3],
-          'CC': [1, 2, 3]}
+          'CC': [1, 2, 3, 4]}
 
 # used in output.py to define the sheet name of each case
 sheetName = {'1020': 'ALL Manager UR YTD',
@@ -57,16 +58,16 @@ sheetHeader = {'1010': ['Total_Chargable_Hours', 'Headcount', 'Target_Hours', 'C
                '1011': ['Market', 'Regions', 'Market_Remote_Hours', 'Market_Total_Hours', 'Market_Remote_Percentage'],
                '1012': ['Cost_Center', 'Total_Chargable_Hours', 'Headcount', 'Target_Hours', 'Manager', 'UR'],
                '1013': ['Cost_Center', 'Total_Chargable_Hours', 'Headcount', 'Target_Hours', 'Manager', 'UR'],
-               '1014': ['Total_Chargable_Hours', 'Headcount', 'Target_Hours', 'Cost_Center', 'Manager', 'UR'],
-               '1015': ['Total_Chargable_Hours', 'Headcount', 'Target_Hours', 'Cost_Center', 'Manager', 'UR']}
+               '1014': ['Total_Chargable_Hours', 'Headcount', 'Target_Hours', 'Cost_Center', 'Head', 'UR'],
+               '1015': ['Total_Chargable_Hours', 'Headcount', 'Target_Hours', 'Cost_Center', 'Head', 'UR']}
 
 # used in modify_table.py to define the Headers of each table
 
 headers = {'Finance': ['Item', 'CostCenter', 'EmployeeGroup'],
            'CDT': ['Region', 'PersonnelNo', 'Name', 'Type', 'CostCenter', 'LM', 'Hours', 'YTD'],
            'MUS': ['Name', 'Date', 'PersonnelNo', 'CostCenter', 'Manager', 'Hours'],
-           'CC': ['CostCenter', 'ManagerHC', 'Manager'],
-           'LeftEmp': ['Name', 'EmployeeNo', 'EID']}
+           'CC': ['CostCenter', 'ManagerHC', 'Manager', 'Head'],
+           'LeftEmp': ['Moveout', 'EmployeeNo', 'EID', 'Name']}
 
 
 #

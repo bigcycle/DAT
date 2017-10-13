@@ -156,8 +156,8 @@ def modifyCC(org_file, sheet):
 
 def modifyLeftEmp(org_file, sheet):
     data = xlrd.open_workbook(org_file, encoding_override='utf-8')
-    table = data.sheets()[0]
-    cols = [1, 2, 0]
+    table = data.sheets()[2]
+    cols = [0, 2, 3, 4]
     rown = table.nrows
     i = 1
     while i < rown:
