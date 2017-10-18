@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<DATconfig>
+    <ID>1015</ID>
+    <name>Data Analysis Tool</name>
+	<data>   
+        <sql>
+            create temporary table tempCDT select SUM(R3M) AS Individual_Total_Hours, PersonnelNo, Name, RIGHT(GROUP_CONCAT(DISTINCT CostCenter SEPARATOR ' '), 10) AS CostCenter from CDT where PersonnelNo != '#' and PersonnelNo not in (select EmployeeNo from LeftEmp) GROUP BY PersonnelNo, Name
+        </sql>
+        <sql>
+            select
+            tempCDT.Individual_Total_Hours, 
+            tempCDT.PersonnelNo, 
+            tempCDT.Name, 
+            tempCDT.CostCenter,
+            CC.Manager,
+            CC.Head,
+            (tempCDT.Individual_Total_Hours / target_hours) AS UR 
+            from tempCDT inner join CC on tempCDT.CostCenter=CC.CostCenter order by UR 
+        </sql>
+        <sheetName>Individual UR Rolling 3 months</sheetName>
+	</data>
+		<rowFormat>s|d|d|d|d</rowFormat>
+		<colCount>5</colCount>
+	<template>302_Excel_Tool.xls</template>
+    <output>302_Excel_Tool_${endTime:yyMMdd}.xls</output>
+</DATconfig>

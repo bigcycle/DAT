@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 
-from fetch import fetch, parse, fetch2, fetch3, fetch4
+from fetch import fetch, parse, fetch2, fetch3, fetch4, fetch5
 import xlwt
 import time
 from config import sheetHeader, sheetName
@@ -10,7 +10,7 @@ from openpyxl import Workbook
 def output(reports, target):
     results = {}
     if reports == "ALL":
-        reports = "1000,1001,1002,1003,1004,1005,1006,1007,1008,1009,1010,1011,1012,1013"
+        reports = "1000,1001,1002,1003,1004,1005,1006,1007,1008,1009,1010,1011,1012,1013,1014,1015"
     templates = reports.split(',')
     for template in templates:
         data = parse('template/%s.xml' % template)
@@ -18,6 +18,8 @@ def output(reports, target):
             results[template] = fetch2(data['sqls'], target)
         elif template == '1011':
             results[template] = fetch4(data['sqls'])
+        elif template == '1015':
+            results[template] = fetch5(data['sqls'], target)
         elif template == '1020':
             fetch3_result = fetch3()
             results['1020'] = fetch3_result[1]

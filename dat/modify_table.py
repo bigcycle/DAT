@@ -60,45 +60,21 @@ def modifyFinance(org_file, sheet, header_key):
 
 def modifyCDT(org_file, sheet, month):
     data = xlrd.open_workbook(org_file)
-    table = data.sheet_by_name(u'Source Data')
-    # temp_row = table.row_values(0)
-    # temp_col = temp_row.index(month)
-    # ytd_col = temp_row.index("YTD")
-    # cols = column['CDT1']
-    # cols.append(temp_col)
-    # cols.append(ytd_col)
-    column_names['CDT1'].insert(-1, month)
-    cols = getColumns(table.row_values(0), column_names['CDT1'])
+    table = data.sheet_by_name(u'OCD')
+    column_names['CDT'].append(month)
+    cols = getColumns(table.row_values(0), column_names['CDT'])
     read_row = 1
     write_row = 1
     rownum = table.nrows
     while read_row < rownum:
         c = 0
         row_datas = table.row_values(read_row)
-        if row_datas[1].strip() != '' and row_datas[4] != '#':
+        if row_datas[1].strip() != '' and row_datas[cols[2]] != '#':
+            if row_datas[cols[-4]] in [5.0, u'#', 4.0]:
+                # 'Internal Admin hours', 'Training hours', 'Not assigned'
+                row_datas[cols[-3]], row_datas[cols[-2]], row_datas[cols[-1]] = [0, 0, 0]
             for col in cols:
                 sheet.write(write_row, c, row_datas[col])
-                c += 1
-            write_row += 1
-        read_row += 1
-    table2 = data.sheet_by_name(u'Unassigned&TTM')
-    # temp_row2 = table2.row_values(0)
-    # temp_col2 = temp_row2.index(month)
-    # ytd_col2 = temp_row2.index("YTD")
-    # cols2 = column['CDT2']
-    # cols2.append(temp_col2)
-    # cols2.append(ytd_col2)
-    column_names['CDT2'].insert(-1, month)
-    cols2 = getColumns(table2.row_values(0), column_names['CDT2'])
-    rownum2 = table2.nrows
-    read_row = 1
-    while read_row < rownum2:
-        c = 0
-        row_datas2 = table2.row_values(read_row)
-        if row_datas2[1].strip() != '' and row_datas2[4] != '#':
-            row_datas2[1] = row_datas2[1].replace('#', 'TTM')
-            for col2 in cols2:
-                sheet.write(write_row, c, row_datas2[col2])
                 c += 1
             write_row += 1
         read_row += 1

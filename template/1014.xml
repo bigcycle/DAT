@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <DATconfig>
-    <ID>1013</ID>
+    <ID>1014</ID>
     <name>Data Analysis Tool</name>
 	<data>   
         <sql> 
@@ -18,12 +18,19 @@
             inner join CC on f1.CostCenter = CC.CostCenter;
         </sql>
         <sql>
-            select *, (Total_Chargable_Hours / Target_Hours) AS UR from tempFA order by UR DESC limit 10;
+            select
+            SUM(Total_Chargable_Hours) AS Total_Chargable_Hours,
+            SUM(Headcount) AS Headcount,
+            SUM(Target_Hours) AS Target_Hours,
+            GROUP_CONCAT(Cost_Center SEPARATOR ' ') AS Cost_Centers,
+            GROUP_CONCAT(Manager SEPARATOR ' ') AS Managers,
+            Head,
+            SUM(Total_Chargable_Hours) / SUM(Target_Hours) AS UR 
+            from tempFA group by Head order by UR DESC;
         </sql>
-        <sheetName>CC UR Top 10</sheetName>
+        <sheetName>Head UR/sheetName>
 	</data>
 		<rowFormat>s|d|d|d|d</rowFormat>
-		<sheetName>CC UR Top 10</sheetName>
 		<colCount>5</colCount>
 	<template>302_Excel_Tool.xls</template>
     <output>302_Excel_Tool_${endTime:yyMMdd}.xls</output>

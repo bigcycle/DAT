@@ -10,11 +10,10 @@ months = {"Jan": 144,
           "Jun": 176,
           "Jul": 168,
           "Aug": 184,
-          "Sep": 188}
+          "Sep": 176}
 
-column_names = {'CDT1': ["Receiving Region", "Personnel Record", "Personnel Record", "Accounting Indicator", "Sender Cost Center", "LM", "YTD"],
-                'CDT2': ["Receiving Region", "Personnel Record", "Personnel Record", "Accounting Indicator", "Sender Cost Center", "LM", "YTD"],
-                'MUS': ["Empl./appl.name", "Date", "Pers.No.", "Send. CCtr", "CC Owner(same as HRMS)", "     Hours"],
+column_names = {'CDT': ["Receiving Region", "Personnel Record", "Name", "Accounting Indicator", "Sender Cost Center", "Cost Center Owner", "Work Category", "YTD hours", "R3M"],
+                'MUS': ["Employee/app.name", "Date", "Pers.No.", "Send. CCtr", "CC Owner(after re-org)", "    Hours"],
                 'Finance': [],
                 'CC': []}
 # used in modify_table.py to define the columns to be fetched for each table
@@ -26,8 +25,8 @@ column = {'CDT1': [1, 4, 5, 16, 17, 29],
 
 # used in output.py to define the sheet name of each case
 sheetName = {'1020': 'ALL Manager UR YTD',
-             '1015': 'Head UR Top 10',
-             '1014': 'Head UR Bottom 10',
+             '1015': 'Individual UR Rolling 3 months',
+             '1014': 'Head UR',
              '1013': 'CC UR Top 10',
              '1012': 'CC UR Bottom 10',
              '1011': 'Remote percentage to per market',
@@ -58,13 +57,14 @@ sheetHeader = {'1010': ['Total_Chargable_Hours', 'Headcount', 'Target_Hours', 'C
                '1011': ['Market', 'Regions', 'Market_Remote_Hours', 'Market_Total_Hours', 'Market_Remote_Percentage'],
                '1012': ['Cost_Center', 'Total_Chargable_Hours', 'Headcount', 'Target_Hours', 'Manager', 'UR'],
                '1013': ['Cost_Center', 'Total_Chargable_Hours', 'Headcount', 'Target_Hours', 'Manager', 'UR'],
-               '1014': ['Total_Chargable_Hours', 'Headcount', 'Target_Hours', 'Cost_Center', 'Head', 'UR'],
-               '1015': ['Total_Chargable_Hours', 'Headcount', 'Target_Hours', 'Cost_Center', 'Head', 'UR']}
+               '1014': ['Total_Chargable_Hours', 'Headcount', 'Target_Hours', 'Cost_Centers', 'Managers', 'Head', 'UR'],
+               '1015': ['Individual_Total_Hours', 'PersonnelNo', 'Name', 'CostCenter', 'LM', 'Head', 'UR_Rolling_3_Month']
+               }
 
 # used in modify_table.py to define the Headers of each table
 
 headers = {'Finance': ['Item', 'CostCenter', 'EmployeeGroup'],
-           'CDT': ['Region', 'PersonnelNo', 'Name', 'Type', 'CostCenter', 'LM', 'Hours', 'YTD'],
+           'CDT': ['Region', 'PersonnelNo', 'Name', 'Type', 'CostCenter', 'LM', 'WorkCat', 'YTD', 'R3M', 'Hours'],
            'MUS': ['Name', 'Date', 'PersonnelNo', 'CostCenter', 'Manager', 'Hours'],
            'CC': ['CostCenter', 'ManagerHC', 'Manager', 'Head'],
            'LeftEmp': ['Moveout', 'EmployeeNo', 'EID', 'Name']}
@@ -81,4 +81,10 @@ markets = {
     'MMEA': ['RMEA', 'RSSA'],
     'MELA': ['RMED', 'RWCE', 'RECA', 'RLAM'],
     'MANA': ['RNAM']
+}
+
+# month_hours
+month_hours = {
+    'month': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    'hours': [144, 152, 184, 144, 168, 176, 168, 184, 176, 136, 176, 160]
 }

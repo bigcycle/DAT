@@ -2,7 +2,7 @@
 
 import xml.etree.ElementTree as ET
 import MySQLdb
-from config import database, months, markets
+from config import database, months, markets, month_hours
 
 
 def parse(file):
@@ -35,6 +35,7 @@ def fetch(sqls, target):
     return results
 
 
+# fetch data for template 1007 & 1008, UR top/bottom 4 per CC
 def fetch2(sqls, target):
     db = MySQLdb.connect("localhost", "root", "root", database)
     cursor = db.cursor()
@@ -67,7 +68,7 @@ def fetch2(sqls, target):
     return results
 
 
-#fetch data for template 1010, YTD data
+# fetch data for template 1020, no xml, sql includes in function: YTD data
 def fetch3():
     db = MySQLdb.connect("localhost", "root", "root", database)
     cursor = db.cursor()
@@ -116,6 +117,7 @@ from tempFA group by Manager order by YTD_UR DESC
     return [headers, results]
 
 
+# fetch data for template 1011, one sql includes in function: Data per market.
 def fetch4(sqls):
     db = MySQLdb.connect("localhost", "root", "root", database)
     cursor = db.cursor()
@@ -141,5 +143,23 @@ from region2market where Region in %s""" % (k, ' '.join(v), regions)
         except Exception, e:
             print "SQL Error:", sql
             raise e
+    db.close()
+    return results
+
+
+def fetch5(sqls, target):
+    index = month_hours['month'].index(target)
+    target_hours = month_hours['hours'][index - 2:index + 1]
+    db = MySQLdb.connect("localhost", "root", "root", database)
+    cursor = db.cursor()
+    for sql in sqls:
+        sql = sql.replace('target_hours', str(sum(target_hours)))
+        try:
+            cursor.execute(sql)
+            # print "curret sql:", sql
+        except Exception, e:
+            print "SQL Error:", sql
+            raise e
+    results = cursor.fetchall()
     db.close()
     return results
