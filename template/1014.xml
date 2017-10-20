@@ -10,7 +10,8 @@
             f1.Hours AS Total_Chargable_Hours,
             (f2.Hours - CC.ManagerHC) AS Headcount,
             ((f2.Hours - CC.ManagerHC) * target_hours) AS Target_Hours,
-            CC.Manager AS Manager
+            CC.Manager AS Manager,
+            CC.Head AS Head
             from
             (select * from Finance where CostCenter in (select CostCenter from CC) AND Item="Total Chargeable hours (All resources)" AND EmployeeGroup='1') f1
             inner join
@@ -23,12 +24,12 @@
             SUM(Headcount) AS Headcount,
             SUM(Target_Hours) AS Target_Hours,
             GROUP_CONCAT(Cost_Center SEPARATOR ' ') AS Cost_Centers,
-            GROUP_CONCAT(Manager SEPARATOR ' ') AS Managers,
+            GROUP_CONCAT(DISTINCT Manager SEPARATOR ', ') AS Managers,
             Head,
             SUM(Total_Chargable_Hours) / SUM(Target_Hours) AS UR 
             from tempFA group by Head order by UR DESC;
         </sql>
-        <sheetName>Head UR/sheetName>
+        <sheetName>Head UR</sheetName>
 	</data>
 		<rowFormat>s|d|d|d|d</rowFormat>
 		<colCount>5</colCount>

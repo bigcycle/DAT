@@ -10,10 +10,16 @@ from openpyxl import Workbook
 def output(reports, target):
     results = {}
     if reports == "ALL":
-        reports = "1000,1001,1002,1003,1004,1005,1006,1007,1008,1009,1010,1011,1012,1013,1014,1015"
+        reports = "1000,1001,1002,1003,1004,1005,1006,1007,1008,1009,1010,1011,1012,1013,1014,1015,1020"
     templates = reports.split(',')
     for template in templates:
-        data = parse('template/%s.xml' % template)
+        if template != '1020':
+            try:
+                data = parse('template/%s.xml' % template)
+            except Exception, e:
+                print e
+                print 'template:', template
+                exit(1)
         if template == '1007' or template == '1008':
             results[template] = fetch2(data['sqls'], target)
         elif template == '1011':
