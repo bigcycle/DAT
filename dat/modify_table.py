@@ -30,19 +30,19 @@ def modify(org_file):
 
 def modifyFinance(org_file, sheet, header_key):
     data = xlrd.open_workbook(org_file)
-    table = data.sheets()[0]
-    temp_row = map(lambda x: x.strip()[:7], table.row_values(30))
+    table = data.sheets()[5]
+    temp_row = map(lambda x: x.strip()[:7], table.row_values(2))
     temp_col = temp_row.index("Overall")
     cols = [x for x in range(0, temp_col)]
     for x in [2, 4, 5]:
         cols.remove(x)
-    header_row = map(lambda x: x.strip()[:3], table.row_values(31))
+    header_row = map(lambda x: x.strip()[:3], table.row_values(3))
     headers[header_key] = headers[header_key] + header_row[6:temp_col]
     c = 0
     for header in headers[header_key]:
         sheet.write(0, c, header)
         c += 1
-    i = 33
+    i = 5
     r = 1
     rown = table.nrows
     while i < rown:
@@ -60,7 +60,7 @@ def modifyFinance(org_file, sheet, header_key):
 
 def modifyCDT(org_file, sheet, month):
     data = xlrd.open_workbook(org_file)
-    table = data.sheet_by_name(u'OCD')
+    table = data.sheets()[1]
     column_names['CDT'].append(month)
     cols = getColumns(table.row_values(0), column_names['CDT'])
     read_row = 1
@@ -71,9 +71,9 @@ def modifyCDT(org_file, sheet, month):
         row_datas = table.row_values(read_row)
         if row_datas[1].strip() != '' and row_datas[cols[2]] != '#':
             row_datas[cols[0]] = row_datas[cols[0]].replace('#', 'TTM')
-            if row_datas[cols[-4]] in [5.0, u'#', 4.0]:
+            # if row_datas[cols[-4]] in [5.0, u'#', 4.0]:
                 # 'Internal Admin hours', 'Training hours', 'Not assigned'
-                row_datas[cols[-3]], row_datas[cols[-2]], row_datas[cols[-1]] = [0, 0, 0] 
+                # row_datas[cols[-3]], row_datas[cols[-2]], row_datas[cols[-1]] = [0, 0, 0] 
             for col in cols:
                 sheet.write(write_row, c, row_datas[col])
                 c += 1
@@ -83,8 +83,9 @@ def modifyCDT(org_file, sheet, month):
 
 def modifyMUS(org_file, sheet):
     data = xlrd.open_workbook(org_file)
-    table = data.sheets()[0]
+    table = data.sheets()[1]
     cols = getColumns(table.row_values(0), column_names['MUS'])
+    # print "cols", cols
     r = 1
     rown = table.nrows
     while r < rown:
@@ -93,7 +94,11 @@ def modifyMUS(org_file, sheet):
         # row_datas[1] = row_datas[1].split(',')[0]
         for col in cols:
             if col == 12:
-                row_datas[col] = row_datas[col].strip()
+                if isinstance(row_datas[col], int):
+                    # some data has no costcenter and LM info, ingore this kind of data
+                    break
+                else:
+                    row_datas[col] = row_datas[col].strip()
             sheet.write(r, c, row_datas[col])
             c += 1
         r += 1
@@ -133,8 +138,8 @@ def modifyCC(org_file, sheet):
 
 def modifyLeftEmp(org_file, sheet):
     data = xlrd.open_workbook(org_file, encoding_override='utf-8')
-    table = data.sheets()[2]
-    cols = [0, 2, 3, 4]
+    table = data.sheets()[4]
+    cols = [0, 3, 4, 5]
     rown = table.nrows
     i = 1
     while i < rown:

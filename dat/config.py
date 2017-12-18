@@ -10,10 +10,12 @@ months = {"Jan": 144,
           "Jun": 176,
           "Jul": 168,
           "Aug": 184,
-          "Sep": 176}
+          "Sep": 176,
+          "Oct": 136,
+          "Nov": 176}
 
-column_names = {'CDT': ["Receiving Region", "Personnel Record", "Name", "Accounting Indicator", "Sender Cost Center", "Cost Center Owner", "Work Category", "YTD hours", "R3M"],
-                'MUS': ["Employee/app.name", "Date", "Pers.No.", "Send. CCtr", "CC Owner(after re-org)", "    Hours"],
+column_names = {'CDT': ["Receiving Region", "Personnel Record", "Name", "Accounting Indicator", "Sender Cost Center", "Cost Center Owner or L5 Manager", "Work Category", "YTD hours"],
+                'MUS': ["Employee/app.name", "Date", "Pers.No.", "Send. CCtr", "CC Owner(after re-org)", "      Hours"],
                 'Finance': [],
                 'CC': []}
 # used in modify_table.py to define the columns to be fetched for each table
@@ -64,7 +66,7 @@ sheetHeader = {'1010': ['Total_Chargable_Hours', 'Headcount', 'Target_Hours', 'C
 # used in modify_table.py to define the Headers of each table
 
 headers = {'Finance': ['Item', 'CostCenter', 'EmployeeGroup'],
-           'CDT': ['Region', 'PersonnelNo', 'Name', 'Type', 'CostCenter', 'LM', 'WorkCat', 'YTD', 'R3M', 'Hours'],
+           'CDT': ['Region', 'PersonnelNo', 'Name', 'Type', 'CostCenter', 'LM', 'WorkCat', 'YTD', 'Hours'],
            'MUS': ['Name', 'Date', 'PersonnelNo', 'CostCenter', 'Manager', 'Hours'],
            'CC': ['CostCenter', 'ManagerHC', 'Manager', 'Head'],
            'LeftEmp': ['Moveout', 'EmployeeNo', 'EID', 'Name']}
