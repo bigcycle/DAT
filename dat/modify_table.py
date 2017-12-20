@@ -70,10 +70,11 @@ def modifyCDT(org_file, sheet, month):
         c = 0
         row_datas = table.row_values(read_row)
         if row_datas[1].strip() != '' and row_datas[cols[2]] != '#':
-            row_datas[cols[0]] = row_datas[cols[0]].replace('#', 'TTM')
+            row_datas[cols[0]] = row_datas[
+                cols[0]].replace('#', 'Not Assigned')
             # if row_datas[cols[-4]] in [5.0, u'#', 4.0]:
-                # 'Internal Admin hours', 'Training hours', 'Not assigned'
-                # row_datas[cols[-3]], row_datas[cols[-2]], row_datas[cols[-1]] = [0, 0, 0] 
+            # 'Internal Admin hours', 'Training hours', 'Not assigned'
+            # row_datas[cols[-3]], row_datas[cols[-2]], row_datas[cols[-1]] = [0, 0, 0]
             for col in cols:
                 sheet.write(write_row, c, row_datas[col])
                 c += 1
@@ -95,7 +96,8 @@ def modifyMUS(org_file, sheet):
         for col in cols:
             if col == 12:
                 if isinstance(row_datas[col], int):
-                    # some data has no costcenter and LM info, ingore this kind of data
+                    # some data has no costcenter and LM info, ingore this kind
+                    # of data
                     break
                 else:
                     row_datas[col] = row_datas[col].strip()
