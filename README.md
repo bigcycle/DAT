@@ -1,5 +1,5 @@
 # DAT
-Data Analysis Tool for E///
+Data Analysis Tool for KPI Analysis
 
 # Packages
 [MySQL-python 1.2.3](https://pypi.python.org/packages/9a/81/924d6799494cf7fb24370335c2f782088d6ac4f79e4137d4df94cea3582c/MySQL-python-1.2.3.tar.gz)
@@ -24,4 +24,4 @@ Data Analysis Tool for E///
 		
 		Output options: (with '-o' option)
 		-r | --report                   Templates which will be included in the report, if more than one template,use ',' to seperate. e.g: '-r 1000,1001,1002'
-		-t | --target                   Target Hours for current month.
+		-t | --target                   Target Month, e.g. Nov, Dec, Jan
