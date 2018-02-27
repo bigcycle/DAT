@@ -10,7 +10,7 @@ def insertdb(table, db, cursor, _headers, __table__):
     rows = table.nrows
     print "%d records founds, start to insert to table.\n" % (rows - 1)
     col = ""
-    he = ', '.join(_headers)
+    he = ', '.join(['`' + x + '`' for x in _headers])
     i = 1
     while i < rows:
         row_datas = table.row_values(i)

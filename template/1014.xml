@@ -8,14 +8,14 @@
             select
             f1.CostCenter AS Cost_Center,
             f1.Hours AS Total_Chargable_Hours,
-            (f2.Hours - CC.ManagerHC) AS Headcount,
-            ((f2.Hours - CC.ManagerHC) * target_hours) AS Target_Hours,
+            f2.Hours AS Headcount,
+            (f2.Hours * target_hours) AS Target_Hours,
             CC.Manager AS Manager,
             CC.Head AS Head
             from
             (select * from Finance where CostCenter in (select CostCenter from CC) AND Item="Total Chargeable hours (All resources)" AND EmployeeGroup='1') f1
             inner join
-            (select * from Finance where CostCenter in (select CostCenter from CC) AND Item="Average Headcount" AND EmployeeGroup='1') f2 on f2.CostCenter = f1.CostCenter
+            (select * from Finance where CostCenter in (select CostCenter from CC) AND Item="Headcount (Chrg. resources)" AND EmployeeGroup='1') f2 on f2.CostCenter = f1.CostCenter
             inner join CC on f1.CostCenter = CC.CostCenter;
         </sql>
         <sql>

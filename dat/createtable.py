@@ -7,7 +7,7 @@ from config import database, months
 def createtable(table, headers):
     sql = "create table %s ( `id` smallint not null auto_increment," % table
     for header in headers:
-        if header in months.keys() + ["Hours", "ManagerHC", "YTD", "R3M"]:
+        if header in months.keys() + ["Hours", "YTD"]:
             sql = sql + " `%s` int," % header
         else:
             sql = sql + " `%s` varchar(200)," % header

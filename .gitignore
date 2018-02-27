@@ -1,0 +1,11 @@
+# Python:
+*.py[cod]
+*.so
+*.egg
+*.egg-info
+dist
+build
+report/*.xls*
+source/*.xls*
+backup/*.xls*
+./*.xls*

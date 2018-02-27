@@ -2,7 +2,7 @@
 
 # used in fetch.py as target hours for each one in current month
 
-months = {"Jan": 144,
+months = {"Jan": 176,
           "Feb": 152,
           "Mar": 184,
           "Apr": 144,
@@ -12,10 +12,30 @@ months = {"Jan": 144,
           "Aug": 184,
           "Sep": 176,
           "Oct": 136,
-          "Nov": 176}
+          "Nov": 176,
+          "Dec": 160}
+
+# month_hours
+month_hours = {
+    'month': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    'hours': [176, 152, 184, 144, 168, 176, 168, 184, 176, 136, 176, 160]
+}
+# 2017
+# months = {"Jan": 144,
+#           "Feb": 152,
+#           "Mar": 184,
+#           "Apr": 144,
+#           "May": 168,
+#           "Jun": 176,
+#           "Jul": 168,
+#           "Aug": 184,
+#           "Sep": 176,
+#           "Oct": 136,
+#           "Nov": 176,
+#           "Dec": 160}
 
 column_names = {'CDT': ["Receiving Region", "Personnel Record", "Name", "Accounting Indicator", "Sender Cost Center", "Cost Center Owner or L5 Manager", "Work Category", "YTD hours"],
-                'MUS': ["Employee/app.name", "Date", "Pers.No.", "Send. CCtr", "CC Owner(after re-org)", "      Hours"],
+                'MUS': ["Empl./appl.name", "Date", "Pers.No.", "Send. CCtr", "CC Owner", "      Hours"],
                 'Finance': [],
                 'CC': []}
 # used in modify_table.py to define the columns to be fetched for each table
@@ -23,7 +43,7 @@ column = {'CDT1': [1, 4, 5, 16, 17, 29],
           'CDT2': [1, 4, 5, 16, 17, 28],
           'MUS': [0, 1, 7, 11, 12, 17],
           'Finance': [0, 1, 3],
-          'CC': [1, 2, 3, 4]}
+          'CC': [0, 1, 2, 3]}
 
 # used in output.py to define the sheet name of each case
 sheetName = {'1020': 'ALL Manager UR YTD',
@@ -68,7 +88,7 @@ sheetHeader = {'1010': ['Total_Chargable_Hours', 'Headcount', 'Target_Hours', 'C
 headers = {'Finance': ['Item', 'CostCenter', 'EmployeeGroup'],
            'CDT': ['Region', 'PersonnelNo', 'Name', 'Type', 'CostCenter', 'LM', 'WorkCat', 'YTD', 'Hours'],
            'MUS': ['Name', 'Date', 'PersonnelNo', 'CostCenter', 'Manager', 'Hours'],
-           'CC': ['CostCenter', 'ManagerHC', 'Manager', 'Head'],
+           'CC': ['CostCenter', 'A315Unit', 'Manager', 'Head'],
            'LeftEmp': ['Moveout', 'EmployeeNo', 'EID', 'Name']}
 
 
@@ -83,10 +103,4 @@ markets = {
     'MMEA': ['RMEA', 'RSSA'],
     'MELA': ['RMED', 'RWCE', 'RECA', 'RLAM'],
     'MANA': ['RNAM']
-}
-
-# month_hours
-month_hours = {
-    'month': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-    'hours': [144, 152, 184, 144, 168, 176, 168, 184, 176, 136, 176, 160]
 }

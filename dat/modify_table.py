@@ -50,7 +50,7 @@ def modifyFinance(org_file, sheet, header_key):
         row_datas = table.row_values(i)
         if "Result" not in row_datas and "Overall Result" not in row_datas and\
             ("Total Chargeable hours (All resources)" in row_datas or
-             "Average Headcount" in row_datas):
+             "Headcount (Chrg. resources)" in row_datas):
             for col in cols:
                 sheet.write(r, c, row_datas[col])
                 c += 1
@@ -111,13 +111,13 @@ def modifyCC(org_file, sheet):
     table = data.sheets()[0]
     cols = column['CC']
     rown = table.nrows
-    i = 4
+    i = 1
     while i < rown:
         c = 0
         row_datas = table.row_values(i)
         # row_datas[1] = row_datas[1].split(',')[0]
         for col in cols:
-            sheet.write(i - 3, c, row_datas[col])
+            sheet.write(i, c, row_datas[col])
             c += 1
         i += 1
 
@@ -140,16 +140,20 @@ def modifyCC(org_file, sheet):
 
 def modifyLeftEmp(org_file, sheet):
     data = xlrd.open_workbook(org_file, encoding_override='utf-8')
-    table = data.sheets()[4]
-    cols = [0, 3, 4, 5]
+    table = data.sheets()[5]
+    cols = [1, 4, 5, 6]
     rown = table.nrows
     i = 1
     while i < rown:
         c = 0
         row_datas = table.row_values(i)
         for col in cols:
-            if not isinstance(row_datas[col], float):
-                row_datas[col] = row_datas[col].strip()
+            try:
+                if not isinstance(row_datas[col], float):
+                    row_datas[col] = row_datas[col].strip()
+            except Exception as e:
+                print i
+                raise e
             sheet.write(i, c, row_datas[col])
             c += 1
         i += 1

@@ -85,20 +85,20 @@ f1.CostCenter AS Cost_Center,
     sqls2 = "select "
     keys = [x[0] for x in cursor.fetchall()[4:]]
     for key in keys:
-        sqls += """f1.month AS month,
-((f2.month - CC.ManagerHC) * """.replace('month', key) + str(months[key]) + """) AS month_Target_Hours,""".replace('month', key)
-        sqls2 += """(SUM(month) / SUM(month_Target_Hours)) AS month_UR,""".replace('month', key)
+        sqls += """f1.month AS `month`,
+(f2.month * """.replace('month', key) + str(months[key]) + """) AS month_Target_Hours,""".replace('month', key)
+        sqls2 += """(SUM(`month`) / SUM(`month_Target_Hours`)) AS `month_UR`,""".replace('month', key)
     sqls += """CC.Manager AS Manager
 from
 (select * from Finance where CostCenter in (select CostCenter from CC) AND Item="Total Chargeable hours (All resources)" AND EmployeeGroup='1') f1
 inner join
-(select * from Finance where CostCenter in (select CostCenter from CC) AND Item="Average Headcount" AND EmployeeGroup='1') f2 on f2.CostCenter = f1.CostCenter
+(select * from Finance where CostCenter in (select CostCenter from CC) AND Item="Headcount (Chrg. resources)" AND EmployeeGroup='1') f2 on f2.CostCenter = f1.CostCenter
 inner join CC on f1.CostCenter = CC.CostCenter
 """
     sqls2 += "("
-    sqls2 += " + ".join(map(lambda x: "SUM(month)".replace('month', x), keys))
+    sqls2 += " + ".join(map(lambda x: "SUM(`month`)".replace('month', x), keys))
     sqls2 += ") / ("
-    sqls2 += " + ".join(map(lambda x: "SUM(month_Target_Hours)".replace('month', x), keys))
+    sqls2 += " + ".join(map(lambda x: "SUM(`month_Target_Hours`)".replace('month', x), keys))
     sqls2 += ") AS YTD_UR,"
     sqls2 += """GROUP_CONCAT(Cost_Center SEPARATOR ' ') AS Cost_Centers,
 Manager
@@ -106,9 +106,13 @@ from tempFA group by Manager order by YTD_UR DESC
 """
     try:
         cursor.execute(sqls)
-        cursor.execute(sqls2)
     except Exception, e:
         print "SQL Error:", sqls
+        raise e
+    try:
+        cursor.execute(sqls2)
+    except Exception, e:
+        print "SQL Error:", sqls2
         raise e
     results = cursor.fetchall()
     headers = [key + "_UR" for key in keys]
