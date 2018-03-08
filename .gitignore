@@ -8,4 +8,4 @@ build
 report/*.xls*
 source/*.xls*
 backup/*.xls*
-./*.xls*
+*.xls*

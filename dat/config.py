@@ -3,7 +3,7 @@
 # used in fetch.py as target hours for each one in current month
 
 months = {"Jan": 176,
-          "Feb": 152,
+          "Feb": 136,
           "Mar": 184,
           "Apr": 144,
           "May": 168,
@@ -18,7 +18,7 @@ months = {"Jan": 176,
 # month_hours
 month_hours = {
     'month': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-    'hours': [176, 152, 184, 144, 168, 176, 168, 184, 176, 136, 176, 160]
+    'hours': [176, 136, 184, 144, 168, 176, 168, 184, 176, 136, 176, 160]
 }
 # 2017
 # months = {"Jan": 144,
