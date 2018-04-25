@@ -18,7 +18,7 @@
             inner join CC on f1.CostCenter = CC.CostCenter;
         </sql>
         <sql>
-            select *, (Total_Chargable_Hours / Target_Hours) AS UR from tempFA order by UR limit 10;
+            select *, (Total_Chargable_Hours / Target_Hours) AS UR from tempFA where Headcount > 0 order by UR limit 10;
         </sql>
         <sheetName>CC UR Bottom 10</sheetName>
 	</data>
