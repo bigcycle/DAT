@@ -35,7 +35,7 @@ month_hours = {
 #           "Dec": 160}
 
 column_names = {'CDT': ["Receiving Region", "Personnel Record", "Name", "Accounting Indicator", "Sender Cost Center", "Cost Center Owner or L5 Manager", "Work Category", "YTD hours"],
-                'MUS': ["Name", "Date", "Pers.No.", "Send. CCtr", "CC Owner", "      Hours"],
+                'MUS': ["Employee/app.name", "Date", "Pers.No.", "Send. CCtr", "CC Owner", "      Hours"],
                 'Finance': [],
                 'CC': []}
 # used in modify_table.py to define the columns to be fetched for each table
