@@ -6,7 +6,7 @@ months = {"Jan": 176,
           "Feb": 136,
           "Mar": 176,
           "Apr": 152,
-          "May": 168,
+          "May": 176,
           "Jun": 176,
           "Jul": 168,
           "Aug": 184,
@@ -18,7 +18,7 @@ months = {"Jan": 176,
 # month_hours
 month_hours = {
     'month': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-    'hours': [176, 136, 176, 152, 168, 176, 168, 184, 176, 136, 176, 160]
+    'hours': [176, 136, 176, 152, 176, 176, 168, 184, 176, 136, 176, 160]
 }
 # 2017
 # months = {"Jan": 144,
@@ -34,8 +34,8 @@ month_hours = {
 #           "Nov": 176,
 #           "Dec": 160}
 
-column_names = {'CDT': ["Receiving Region", "Personnel Record", "Name", "Accounting Indicator", "Sender Cost Center", "Cost Center Owner or L5 Manager", "Work Category", "YTD hours"],
-                'MUS': ["Employee/app.name", "Date", "Pers.No.", "Send. CCtr", "CC Owner", "      Hours"],
+column_names = {'CDT': ["Receiving Region", "Personnel Record", "Personnel Name", "Accounting Indicator", "Sender Cost Center", "Cost Center Owner or L4 Manager", "Work Category", "Total Hours (Current Year)"],
+                'MUS': ["Empl./appl.name", "Date", "Pers.No.", "Send. CCtr", "CC Owner", "      Hours"],
                 'Finance': [],
                 'CC': []}
 # used in modify_table.py to define the columns to be fetched for each table

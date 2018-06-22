@@ -61,7 +61,9 @@ def modifyFinance(org_file, sheet, header_key):
 def modifyCDT(org_file, sheet, month):
     data = xlrd.open_workbook(org_file)
     table = data.sheets()[1]
-    column_names['CDT'].append(month)
+    month_name = {'Jan': 'January', 'Feb': 'February', 'Mar': 'March', 'Apr': 'April', 'May': 'May', 'Jun': 'June',
+                  'Jul': 'July', 'Aug': 'August', 'Sep': 'September', 'Oct': 'October', 'Nov': 'November', 'Dec': 'December'}
+    column_names['CDT'].append(month_name[month])
     cols = getColumns(table.row_values(0), column_names['CDT'])
     read_row = 1
     write_row = 1
