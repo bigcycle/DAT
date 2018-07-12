@@ -7,7 +7,7 @@ months = {"Jan": 176,
           "Mar": 176,
           "Apr": 152,
           "May": 176,
-          "Jun": 176,
+          "Jun": 160,
           "Jul": 168,
           "Aug": 184,
           "Sep": 176,
@@ -18,7 +18,7 @@ months = {"Jan": 176,
 # month_hours
 month_hours = {
     'month': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-    'hours': [176, 136, 176, 152, 176, 176, 168, 184, 176, 136, 176, 160]
+    'hours': [176, 136, 176, 152, 176, 160, 168, 184, 176, 136, 176, 160]
 }
 # 2017
 # months = {"Jan": 144,
